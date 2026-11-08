@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LUMEN — An Evening of Light · Charlotte</title>
+<meta name="description" content="A sealed invitation to LUMEN — An Evening of Light. The Ivory Hall, Charlotte, NC · May 14, 2027.">
+<meta name="theme-color" content="#0e0f11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-intro">
+
+<section id="intro" aria-label="Sealed invitation">
+  <canvas id="gl"></canvas>
+  <img id="fallback" src="assets/envelope.jpg" alt="White envelope with a glowing seal" hidden>
+  <div class="intro-top"><span class="dot"></span><span class="mono" data-i18n="intro.top">Private · 1 sealed invitation</span></div>
+  <div class="intro-title" aria-hidden="true"><p class="mono" data-i18n="intro.top"></p><h2 data-i18n="intro.t">A private invitation</h2></div>
+  <button class="intro-cta" id="openBtn"><span class="ring"></span><span data-i18n="intro.cta">Tap the seal to open</span></button>
+  <button class="skip mono" id="skipBtn" data-i18n="intro.skip">Skip intro</button>
+</section>
+<div id="whiteout" aria-hidden="true"></div>
+
+<div class="lang" role="group" aria-label="Language"><button data-lang="en" class="on">EN</button><button data-lang="cs">CZ</button></div>
+
+<main id="site" aria-hidden="true">
+  <header class="hero">
+    <canvas id="dust" aria-hidden="true"></canvas>
+    <p class="kicker mono reveal" data-i18n="hero.kicker">You are invited to</p>
+    <h1 class="wordmark reveal">LUMEN</h1>
+    <p class="hero-sub reveal" data-i18n="hero.sub">An Evening of Light</p>
+    <div class="hero-meta reveal">
+      <div><span class="mono label" data-i18n="meta.when">When</span><strong data-i18n="meta.date">Friday, May 14, 2027</strong><span data-i18n="meta.time">From 6:30 PM</span></div>
+      <div class="sep"></div>
+      <div><span class="mono label" data-i18n="meta.where">Where</span><strong>The Ivory Hall</strong><span>Uptown · Charlotte, NC</span></div>
+    </div>
+    <a href="#rsvp" class="btn btn-primary reveal" data-i18n="hero.rsvp">RSVP</a>
+    <div class="scroll-hint" aria-hidden="true"><span></span></div>
+  </header>
+
+  <section class="invite">
+    <div class="wrap narrow">
+      <p class="kicker mono reveal" data-i18n="inv.kicker">I · The invitation</p>
+      <h2 class="serif reveal" data-i18n="inv.title">One night. One room. Made of light.</h2>
+      <p class="lead reveal" data-i18n="inv.body">On the evening of May 14 the Ivory Hall goes dark — and then, piece by piece, it begins to glow. A new light installation, unveiled for one night only, for a small circle of guests. We would be honoured if you were one of them.</p>
+      <p class="sign reveal" data-i18n="inv.sign">With warmest regards, your hosts</p>
+    </div>
+  </section>
+
+  <section class="secret">
+    <div class="wrap narrow center">
+      <p class="kicker mono reveal" data-i18n="sec.kicker">II · Guest of the evening</p>
+      <h2 class="reveal" data-i18n="sec.title">Scratch the gold to reveal</h2>
+      <div class="foil reveal" id="foil">
+        <div class="foil-under">
+          <p class="mono label" data-i18n="sec.label">Special guest</p>
+          <p class="guest-name">Aria Vance</p>
+          <p class="guest-role" data-i18n="sec.role">Light artist · live performance at 9:00 PM</p>
+        </div>
+        <canvas id="foilCv" aria-label="Gold foil — scratch to reveal"></canvas>
+        <p class="foil-hint mono" id="foilHint" data-i18n="sec.hint">Scratch here</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="count">
+    <div class="wrap center">
+      <p class="kicker mono reveal" data-i18n="cd.kicker">III · Countdown</p>
+      <h2 class="reveal" data-i18n="cd.title">The lights go on in</h2>
+      <div class="digits reveal" id="countdown">
+        <div><b data-u="d">000</b><span data-i18n="cd.d">days</span></div>
+        <div><b data-u="h">00</b><span data-i18n="cd.h">hours</span></div>
+        <div><b data-u="m">00</b><span data-i18n="cd.m">minutes</span></div>
+        <div><b data-u="s">00</b><span data-i18n="cd.s">seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="program">
+    <div class="wrap">
+      <p class="kicker mono reveal" data-i18n="pr.kicker">IV · The evening</p>
+      <h2 class="reveal" data-i18n="pr.title">Program</h2>
+      <ol class="timeline">
+        <li class="reveal"><time data-t="18:30">6:30 PM</time><div><h3 data-i18n="pr.1t">Welcome drinks</h3><p data-i18n="pr.1p">Champagne in the candlelit foyer.</p></div></li>
+        <li class="reveal hot"><time data-t="19:30">7:30 PM</time><div><h3 data-i18n="pr.2t">Unveiling of the installation</h3><p data-i18n="pr.2p">The hall goes dark. Then the first light.</p></div></li>
+        <li class="reveal"><time data-t="21:00">9:00 PM</time><div><h3 data-i18n="pr.3t">Light show</h3><p data-i18n="pr.3p">Light, sound and a live performance by our special guest.</p></div></li>
+        <li class="reveal"><time data-t="22:30">10:30 PM</time><div><h3 data-i18n="pr.4t">Afterparty</h3><p data-i18n="pr.4p">DJ set under the installation, until late.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="venue">
+    <div class="wrap grid2">
+      <div>
+        <p class="kicker mono reveal" data-i18n="ve.kicker">V · The place</p>
+        <h2 class="reveal">The Ivory Hall</h2>
+        <p class="reveal muted" data-i18n="ve.body">A 1920s ballroom with ivory columns and a forty-foot ceiling, in the heart of Uptown Charlotte.</p>
+        <ul class="facts reveal">
+          <li><span class="mono label" data-i18n="ve.park">Arrival</span><span data-i18n="ve.parkv">Valet parking at the main entrance</span></li>
+          <li><span class="mono label" data-i18n="ve.door">Entry</span><span data-i18n="ve.doorv">Please bring your digital ticket</span></li>
+        </ul>
+        <a class="btn btn-ghost reveal" id="mapsLink" target="_blank" rel="noopener" data-i18n="ve.open">Open in Maps</a>
+      </div>
+      <div class="map reveal" id="map" role="img" aria-label="Map of The Ivory Hall, Uptown Charlotte"></div>
+    </div>
+  </section>
+
+  <section class="dress">
+    <div class="wrap center">
+      <p class="kicker mono reveal" data-i18n="dr.kicker">VI · Dress code</p>
+      <h2 class="serif reveal">Black &amp; Gold</h2>
+      <p class="lead reveal mx" data-i18n="dr.body">Black tie, evening black — and a touch of gold. Let the room do the shining.</p>
+      <div class="swatches reveal">
+        <div style="--c:#0b0b0c"><i></i><span data-i18n="dr.c1">Black</span></div>
+        <div style="--c:linear-gradient(135deg,#7a5a2a,#f3d58c 40%,#b8893f 60%,#fbe7b0)"><i></i><span data-i18n="dr.c2">Gold</span></div>
+        <div style="--c:linear-gradient(135deg,#8a5440,#e7b39a 45%,#a8664c)"><i></i><span data-i18n="dr.c3">Rose copper</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rsvp" id="rsvp">
+    <div class="wrap narrow">
+      <p class="kicker mono reveal" data-i18n="rs.kicker">VII · RSVP</p>
+      <h2 class="reveal" data-i18n="rs.title">Will you join us?</h2>
+      <p class="reveal muted" data-i18n="rs.by">Kindly reply by April 20, 2027.</p>
+      <form id="rsvpForm" class="reveal" novalidate>
+        <label class="full"><span data-i18n="rs.name">Full name</span><input name="name" required autocomplete="name"></label>
+        <fieldset>
+          <legend data-i18n="rs.guests">Number of guests</legend>
+          <div class="seg"><label><input type="radio" name="guests" value="1" checked><span>1</span></label><label><input type="radio" name="guests" value="2"><span>2</span></label></div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="rs.menu">Menu</legend>
+          <div class="seg three">
+            <label><input type="radio" name="menu" value="classic" checked><span data-i18n="rs.m1">Classic</span></label>
+            <label><input type="radio" name="menu" value="vegetarian"><span data-i18n="rs.m2">Vegetarian</span></label>
+            <label><input type="radio" name="menu" value="vegan"><span data-i18n="rs.m3">Vegan</span></label>
+          </div>
+        </fieldset>
+        <label class="full"><span data-i18n="rs.note">A note for the hosts</span><textarea name="note" rows="3"></textarea></label>
+        <p class="err" id="formErr" hidden data-i18n="rs.err">Please enter your name.</p>
+        <button class="btn btn-primary full" type="submit" data-i18n="rs.send">Confirm attendance</button>
+      </form>
+      <div class="pass-wrap" id="passWrap" hidden>
+        <p class="kicker mono" data-i18n="ps.kicker">See you in the light</p>
+        <div class="pass">
+          <div class="pass-top"><span class="mono">LUMEN</span><span class="mono" id="passId">LM27-0000</span></div>
+          <div class="pass-mid">
+            <div>
+              <p class="mono label" data-i18n="ps.guest">Guest</p>
+              <p class="pass-name" id="passName">—</p>
+              <p class="mono label" data-i18n="ps.admits">Admits</p>
+              <p id="passAdmits">1</p>
+            </div>
+            <div class="qr" id="qr"></div>
+          </div>
+          <div class="pass-bot mono"><span data-i18n="meta.dateShort">May 14, 2027 · 6:30 PM</span><span>The Ivory Hall</span></div>
+        </div>
+        <p class="muted center" data-i18n="ps.show">Show this ticket at the entrance.</p>
+        <div class="cal">
+          <button class="btn btn-ghost" id="icsBtn" data-i18n="ps.ics">Add to calendar (.ics)</button>
+          <a class="btn btn-ghost" id="gcalBtn" target="_blank" rel="noopener" data-i18n="ps.gcal">Google Calendar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="serif" data-i18n="ft.line">We’ll keep a light on for you.</p>
+    <p class="mono small">LUMEN · An Evening of Light · Charlotte, NC</p>
+    <p class="mono small dim" data-i18n="ft.demo">Fictional event · design demo</p>
+  </footer>
+</main>
+
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>window.INTRO_CFG = { video: "assets/open.mp4", light: { x: 1288, y: 780 }, warm: true };</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

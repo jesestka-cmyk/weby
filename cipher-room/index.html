@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>THE CIPHER ROOM — Opening Night · Charlotte</title>
+<meta name="description" content="A sealed invitation to the opening night of The Cipher Room, a hidden bar in Charlotte, NC · October 16, 2027.">
+<meta name="theme-color" content="#121315">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-intro">
+
+<section id="intro" aria-label="Sealed invitation">
+  <canvas id="gl"></canvas>
+  <img id="fallback" src="assets/envelope.jpg" alt="Black envelope sealed with copper wax" hidden>
+  <button class="intro-cta" id="openBtn" aria-label="Open the invitation"></button>
+  <button class="skip" id="skipBtn" aria-label="Skip intro"></button>
+</section>
+<div id="whiteout" aria-hidden="true"></div>
+
+<div class="lang" role="group" aria-label="Language"><button data-lang="en" class="on">EN</button><button data-lang="cs">CZ</button></div>
+
+<main id="site" aria-hidden="true">
+
+  <!-- 1 · HERO: šestiúhelník se vykreslí a složí nápis -->
+  <section class="hero" id="hero">
+    <div class="hero-pin">
+      <div class="glow" aria-hidden="true"></div>
+      <svg class="hex" viewBox="-110 -110 220 220" aria-hidden="true">
+        <polygon class="hx h0" points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50"/>
+        <polygon class="hx h1" points="0,-86 74.5,43 -74.5,43"/>
+        <polygon class="hx h2" points="0,86 74.5,-43 -74.5,-43"/>
+        <polygon class="hx h3" points="0,-40 34.6,-20 34.6,20 0,40 -34.6,20 -34.6,-20"/>
+        <circle class="hx h4" r="104"/>
+      </svg>
+      <p class="kicker mono h-kick" data-i18n="hero.kicker">Opening night · by invitation only</p>
+      <h1 class="wordmark" aria-label="The Cipher Room">
+        <small class="w-the">THE</small>
+        <span class="letters"><b>C</b><b>I</b><b>P</b><b>H</b><b>E</b><b>R</b></span>
+        <small class="w-room">ROOM</small>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">A hidden bar opens its copper door</p>
+      <div class="hero-meta">
+        <div><span class="mono label" data-i18n="meta.when">When</span><strong data-i18n="meta.date">Saturday, October 16, 2027</strong><span data-i18n="meta.time">From 8:00 PM</span></div>
+        <div class="sep"></div>
+        <div><span class="mono label" data-i18n="meta.where">Where</span><strong data-i18n="meta.place">Behind the copper door</strong><span>NoDa · Charlotte, NC</span></div>
+      </div>
+      <div class="scroll-cue mono" aria-hidden="true"><span data-i18n="hero.scroll">Scroll</span><i></i></div>
+    </div>
+  </section>
+
+  <!-- 2 · POZVÁNÍ: slova se rozsvěcí jako svíčky -->
+  <section class="invite" id="invite">
+    <div class="invite-pin">
+      <p class="kicker mono" data-i18n="inv.kicker">01 · The invitation</p>
+      <p class="candle-text" id="candleText" data-i18n="inv.body">There is no sign, no menu in the window and no number on the door. For one night, before anyone else, we open The Cipher Room to sixty guests — candlelight, copper and cocktails built like puzzles. You are one of the sixty.</p>
+      <p class="sign" data-i18n="inv.sign">— The keepers of the room</p>
+    </div>
+  </section>
+
+  <!-- 3 · HESLO: měděný kódový zámek -->
+  <section class="lock-sec" id="lock">
+    <div class="wrap center">
+      <p class="kicker mono rv" data-i18n="sec.kicker">02 · The password</p>
+      <h2 class="rv" data-i18n="sec.title">Crack the copper lock</h2>
+      <p class="muted rv mx" data-i18n="sec.sub">Turn the three rings until all hexagons meet at the top mark.</p>
+      <div class="lock rv" id="lockBox">
+        <div class="door l" aria-hidden="true"></div><div class="door r" aria-hidden="true"></div>
+        <div class="secret-word">
+          <p class="mono label" data-i18n="sec.label">Tonight’s password</p>
+          <p class="word" data-i18n="sec.word">“The hexagon sleeps”</p>
+          <p class="valid" data-i18n="sec.role">Whisper it at the door · valid October 16 only</p>
+        </div>
+        <svg id="lockSvg" viewBox="-160 -160 320 320" role="group" aria-label="Combination lock"></svg>
+      </div>
+      <p class="lock-hint mono rv" id="lockHint" data-i18n="sec.hint">Drag a ring — or tap it to turn</p>
+    </div>
+  </section>
+
+  <!-- 4 · ODPOČET: překlápěcí tabule -->
+  <section class="count" id="count">
+    <div class="wrap center">
+      <p class="kicker mono rv" data-i18n="cd.kicker">03 · Countdown</p>
+      <h2 class="rv" data-i18n="cd.title">The door opens in</h2>
+      <div class="board rv" id="board">
+        <div class="grp" data-u="d"><div class="flaps"></div><span data-i18n="cd.d">days</span></div>
+        <div class="grp" data-u="h"><div class="flaps"></div><span data-i18n="cd.h">hours</span></div>
+        <div class="grp" data-u="m"><div class="flaps"></div><span data-i18n="cd.m">minutes</span></div>
+        <div class="grp" data-u="s"><div class="flaps"></div><span data-i18n="cd.s">seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · PROGRAM: vodorovná cesta svíčky -->
+  <section class="program" id="program">
+    <div class="prog-pin">
+      <div class="prog-head">
+        <div>
+          <p class="kicker mono" data-i18n="pr.kicker">04 · The night</p>
+          <h2 data-i18n="pr.title">Program</h2>
+        </div>
+        <svg class="clock" viewBox="-50 -50 100 100" aria-hidden="true">
+          <circle r="46" class="c-face"/>
+          <g class="ticks"></g>
+          <line class="hand-h" x1="0" y1="6" x2="0" y2="-24"/>
+          <line class="hand-m" x1="0" y1="8" x2="0" y2="-36"/>
+          <circle r="3" class="c-pin"/>
+        </svg>
+      </div>
+      <div class="track" id="track">
+        <svg class="rail" id="rail" preserveAspectRatio="none" aria-hidden="true"><path id="railPath"/><path id="railLit"/></svg>
+        <div class="flame" id="flame" aria-hidden="true"><i></i></div>
+        <article class="stop" data-t="20:00" tabindex="0">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 58V14a14 14 0 0 1 28 0v44M12 58h40M40 36h2"/><path d="M32 18l5 3v6l-5 3-5-3v-6z"/></svg>
+          <time></time><h3 data-i18n="pr.1t">The door opens</h3><p data-i18n="pr.1p">Give the password, take the first pour.</p>
+          <p class="more" data-i18n="pr.1m">First pour: the Copper Hex — mezcal, honey, smoke.</p>
+        </article>
+        <article class="stop" data-t="21:00" tabindex="0">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 10h14l-2 16a5 5 0 0 1-10 0zM21 31v20M15 52h12M36 10h14l-2 16a5 5 0 0 1-10 0zM43 31v20M37 52h12"/><path d="M28 6l4-4M32 8l6-2M26 4l-1-3"/></svg>
+          <time></time><h3 data-i18n="pr.2t">The founders’ toast</h3><p data-i18n="pr.2p">The copper bar lights up for the first time.</p>
+          <p class="more" data-i18n="pr.2m">Glasses up — and the first secret of the room revealed.</p>
+        </article>
+        <article class="stop" data-t="22:00" tabindex="0">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M40 6v30a12 12 0 1 1-12-12M40 6l10 4M34 12h6M34 18h6M34 24h6"/><circle cx="28" cy="36" r="4"/></svg>
+          <time></time><h3 data-i18n="pr.3t">Live jazz</h3><p data-i18n="pr.3p">A trio in the corner, cocktails built like puzzles.</p>
+          <p class="more" data-i18n="pr.3m">Upright bass, brushed drums and a saxophone in the smoke.</p>
+        </article>
+        <article class="stop" data-t="23:30" tabindex="0">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="8"/><circle cx="32" cy="32" r="16"/><path d="M50 10l6 6-14 14"/></svg>
+          <time></time><h3 data-i18n="pr.4t">Late-night set</h3><p data-i18n="pr.4p">Vinyl only, until the candles burn out.</p>
+          <p class="more" data-i18n="pr.4m">Bring a record request — the keepers might play it.</p>
+        </article>
+      </div>
+      <p class="prog-hint mono" data-i18n="pr.hint">Tap a stop for details</p>
+    </div>
+  </section>
+
+  <!-- 6 · MÍSTO: trasa ke dveřím -->
+  <section class="venue" id="venue">
+    <div class="venue-pin">
+      <div class="map" id="map" role="img" aria-label="Map of NoDa, Charlotte with the route to the door"></div>
+      <div class="venue-card">
+        <p class="kicker mono" data-i18n="ve.kicker">05 · The place</p>
+        <h2 data-i18n="ve.title">Find the copper door</h2>
+        <ol class="steps">
+          <li data-i18n="ve.s1">Get dropped off on N Davidson St.</li>
+          <li data-i18n="ve.s2">Walk past the gallery with the red window.</li>
+          <li data-i18n="ve.s3">Turn into the alley. Look for the copper hexagon.</li>
+        </ol>
+        <p class="muted small2" data-i18n="ve.doorv">Password and digital ticket · 21+</p>
+        <a class="btn btn-ghost" id="mapsLink" target="_blank" rel="noopener" data-i18n="ve.open">Open in Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · DRESS CODE: mince -->
+  <section class="dress" id="dress">
+    <div class="wrap center">
+      <p class="kicker mono rv" data-i18n="dr.kicker">06 · Dress code</p>
+      <h2 class="rv" data-i18n="dr.title">Black &amp; Copper</h2>
+      <p class="lead rv mx" data-i18n="dr.body">Dark suits, black dresses, velvet — and something that catches the candlelight.</p>
+      <div class="coins">
+        <div class="coin"><div class="face back"><span>I</span></div><div class="face front" style="--c:#0c0c0d"></div><p data-i18n="dr.c1">Black</p></div>
+        <div class="coin"><div class="face back"><span>II</span></div><div class="face front" style="--c:linear-gradient(135deg,#7a4630,#e7b39a 42%,#b06a4c 62%,#f2c9b2)"></div><p data-i18n="dr.c2">Copper</p></div>
+        <div class="coin"><div class="face back"><span>III</span></div><div class="face front" style="--c:linear-gradient(135deg,#2a2c30,#4a4e55)"></div><p data-i18n="dr.c3">Charcoal</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · RSVP: vstupenka vyjede ze štěrbiny -->
+  <section class="rsvp" id="rsvp">
+    <div class="wrap narrow">
+      <p class="kicker mono rv" data-i18n="rs.kicker">07 · RSVP</p>
+      <h2 class="rv" data-i18n="rs.title">Will you come through the door?</h2>
+      <p class="rv muted" data-i18n="rs.by">Sixty places. Kindly reply by September 30, 2027.</p>
+      <form id="rsvpForm" class="rv" novalidate>
+        <label class="full"><span data-i18n="rs.name">Full name</span><input name="name" required autocomplete="name"></label>
+        <fieldset>
+          <legend data-i18n="rs.guests">Number of guests</legend>
+          <div class="seg"><label><input type="radio" name="guests" value="1" checked><span>1</span></label><label><input type="radio" name="guests" value="2"><span>2</span></label></div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="rs.menu">Bites</legend>
+          <div class="seg three">
+            <label><input type="radio" name="menu" value="classic" checked><span data-i18n="rs.m1">Classic</span></label>
+            <label><input type="radio" name="menu" value="vegetarian"><span data-i18n="rs.m2">Vegetarian</span></label>
+            <label><input type="radio" name="menu" value="vegan"><span data-i18n="rs.m3">Vegan</span></label>
+          </div>
+        </fieldset>
+        <label class="full"><span data-i18n="rs.note">A note for the keepers</span><textarea name="note" rows="3"></textarea></label>
+        <p class="err" id="formErr" hidden data-i18n="rs.err">Please enter your name.</p>
+        <button class="btn btn-primary full" type="submit" data-i18n="rs.send">Confirm attendance</button>
+      </form>
+      <div class="pass-wrap" id="passWrap" hidden>
+        <div class="slot" aria-hidden="true"></div>
+        <div class="pass-clip">
+          <div class="pass" id="pass">
+            <div class="pass-top"><span class="mono">THE CIPHER ROOM</span><span class="mono" id="passId">CR27-0000</span></div>
+            <div class="pass-mid">
+              <div>
+                <p class="mono label" data-i18n="ps.guest">Guest</p>
+                <p class="pass-name" id="passName">—</p>
+                <p class="mono label" data-i18n="ps.admits">Admits</p>
+                <p id="passAdmits">1</p>
+              </div>
+              <div class="qr" id="qr"></div>
+            </div>
+            <div class="pass-bot mono"><span data-i18n="meta.dateShort">Oct 16, 2027 · 8:00 PM</span><span>NoDa · Charlotte</span></div>
+          </div>
+        </div>
+        <p class="kicker mono" data-i18n="ps.kicker">The door will open for you</p>
+        <p class="muted center" data-i18n="ps.show">Show this ticket — and say the password.</p>
+        <div class="cal">
+          <button class="btn btn-ghost" id="icsBtn" data-i18n="ps.ics">Add to calendar (.ics)</button>
+          <a class="btn btn-ghost" id="gcalBtn" target="_blank" rel="noopener" data-i18n="ps.gcal">Google Calendar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <svg class="foot-hex" viewBox="-110 -110 220 220" aria-hidden="true"><polygon points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50"/><polygon points="0,-86 74.5,43 -74.5,43"/><polygon points="0,86 74.5,-43 -74.5,-43"/></svg>
+    <p class="serif" data-i18n="ft.line">Keep this quiet. We’ll be waiting behind the copper door.</p>
+    <p class="mono small">THE CIPHER ROOM · NoDa · Charlotte, NC</p>
+    <p class="mono small dim" data-i18n="ft.demo">Fictional event · design demo</p>
+  </footer>
+</main>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>window.INTRO_CFG = { video: "assets/open.mp4", wax: true, traces: null, seal: { x: 1278, y: 720, r: 172 }, light: { x: 1288, y: 640 }, env: { w: 1.39, h: 0.96 }, warm: 2, bg: 0x1b1d21 };</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

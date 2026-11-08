@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIGNAL ’27 · Private Launch Night · Veyra Labs</title>
+<meta name="description" content="You've received a sealed invitation to SIGNAL ’27 — a private launch night by Veyra Labs. Charlotte, NC · September 16, 2027.">
+<meta name="theme-color" content="#1d2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-intro">
+
+<!-- ============ INTRO: zapečetěná obálka ============ -->
+<section id="intro" aria-label="Sealed invitation">
+  <canvas id="gl"></canvas>
+  <img id="fallback" src="assets/envelope.jpg" alt="Sealed envelope with a glowing seal" hidden>
+  <div class="intro-top">
+    <span class="dot"></span>
+    <span class="mono" data-i18n="intro.top">Incoming transmission · 1 sealed invitation</span>
+  </div>
+  <div class="intro-title" aria-hidden="true"><p class="mono" data-i18n="intro.top"></p><h2 data-i18n="intro.t">You’ve got a signal.</h2></div>
+  <button class="intro-cta" id="openBtn">
+    <span class="ring"></span>
+    <span data-i18n="intro.cta">Tap the seal to open</span>
+  </button>
+  <button class="skip mono" id="skipBtn" data-i18n="intro.skip">Skip intro</button>
+</section>
+<div id="whiteout" aria-hidden="true"></div>
+
+<!-- přepínač jazyka -->
+<div class="lang" role="group" aria-label="Language">
+  <button data-lang="en" class="on">EN</button><button data-lang="cs">CZ</button>
+</div>
+
+<!-- ============ POZVÁNKA ============ -->
+<main id="site" aria-hidden="true">
+
+  <header class="hero">
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <p class="kicker mono reveal" data-i18n="hero.kicker">Veyra Labs presents</p>
+    <h1 class="wordmark reveal"><span>SIGNAL</span><em>’27</em></h1>
+    <p class="hero-sub reveal" data-i18n="hero.sub">A private launch night</p>
+    <div class="hero-meta reveal">
+      <div><span class="mono label" data-i18n="meta.when">When</span><strong data-i18n="meta.date">Thursday, September 16, 2027</strong><span data-i18n="meta.time">Doors at 6:30 PM</span></div>
+      <div class="sep"></div>
+      <div><span class="mono label" data-i18n="meta.where">Where</span><strong>Hangar 9</strong><span>South End · Charlotte, NC</span></div>
+    </div>
+    <a href="#rsvp" class="btn btn-primary reveal" data-i18n="hero.rsvp">RSVP</a>
+    <div class="scroll-hint mono" aria-hidden="true"><span></span></div>
+  </header>
+
+  <section class="invite">
+    <div class="wrap narrow">
+      <p class="kicker mono reveal" data-i18n="inv.kicker">01 · The invitation</p>
+      <h2 class="serif reveal" data-i18n="inv.title">You’re on the list.</h2>
+      <p class="lead reveal" data-i18n="inv.body">For three years we’ve been building something quietly. On September 16 we switch it on — for the first time, in one room, for two hundred people. No livestream. No press. Just the signal, and you.</p>
+      <p class="sign reveal" data-i18n="inv.sign">— The Veyra Labs team</p>
+    </div>
+  </section>
+
+  <section class="secret">
+    <div class="wrap">
+      <div class="secret-card reveal">
+        <div class="lens" aria-hidden="true"><canvas id="lensCv"></canvas></div>
+        <div class="secret-body">
+          <p class="kicker mono" data-i18n="sec.kicker">02 · Classified</p>
+          <h2 data-i18n="sec.title">Tonight’s keynote</h2>
+          <p class="cipher" id="cipherName" aria-live="polite">▒▒▒▒ ▒▒▒▒▒▒ ▒▒▒▒</p>
+          <p class="cipher-role" id="cipherRole">&nbsp;</p>
+          <button class="hold" id="holdBtn">
+            <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/><circle class="prog" cx="22" cy="22" r="19"/></svg>
+            <span data-i18n="sec.hold">Hold to decrypt</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="count">
+    <div class="wrap">
+      <p class="kicker mono reveal" data-i18n="cd.kicker">03 · Countdown</p>
+      <h2 class="reveal" data-i18n="cd.title">The signal goes live in</h2>
+      <div class="digits reveal" id="countdown">
+        <div><b data-u="d">000</b><span data-i18n="cd.d">days</span></div>
+        <div><b data-u="h">00</b><span data-i18n="cd.h">hours</span></div>
+        <div><b data-u="m">00</b><span data-i18n="cd.m">minutes</span></div>
+        <div><b data-u="s">00</b><span data-i18n="cd.s">seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="program">
+    <div class="wrap">
+      <p class="kicker mono reveal" data-i18n="pr.kicker">04 · The evening</p>
+      <h2 class="reveal" data-i18n="pr.title">Program</h2>
+      <ol class="timeline">
+        <li class="reveal"><time data-t="18:30">6:30 PM</time><div><h3 data-i18n="pr.1t">Doors &amp; welcome drinks</h3><p data-i18n="pr.1p">Chrome bar opens, ambient set in the hangar.</p></div></li>
+        <li class="reveal"><time data-t="19:15">7:15 PM</time><div><h3 data-i18n="pr.2t">Opening keynote</h3><p data-i18n="pr.2p">Our classified guest on why machines should listen first.</p></div></li>
+        <li class="reveal hot"><time data-t="20:00">8:00 PM</time><div><h3 data-i18n="pr.3t">The first public signal</h3><p data-i18n="pr.3p">The live demo. Phones down, eyes up.</p></div></li>
+        <li class="reveal"><time data-t="21:00">9:00 PM</time><div><h3 data-i18n="pr.4t">Dinner &amp; conversations</h3><p data-i18n="pr.4p">Seasonal tasting menu. Meet the people who built it.</p></div></li>
+        <li class="reveal"><time data-t="22:30">10:30 PM</time><div><h3 data-i18n="pr.5t">Afterparty</h3><p data-i18n="pr.5p">Live set by the Frequency Collective, till late.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="venue">
+    <div class="wrap grid2">
+      <div>
+        <p class="kicker mono reveal" data-i18n="ve.kicker">05 · The place</p>
+        <h2 class="reveal">Hangar 9</h2>
+        <p class="reveal" data-i18n="ve.body">A restored 1940s aircraft hangar in South End, Charlotte.</p>
+        <ul class="facts reveal">
+          <li><span class="mono label" data-i18n="ve.park">Parking</span><span data-i18n="ve.parkv">Valet at the north gate</span></li>
+          <li><span class="mono label" data-i18n="ve.transit">Transit</span><span data-i18n="ve.transitv">LYNX Blue Line · East/West Blvd, 6 min walk</span></li>
+        </ul>
+        <a class="btn btn-ghost reveal" id="mapsLink" target="_blank" rel="noopener" data-i18n="ve.open">Open in Maps</a>
+      </div>
+      <div class="map reveal" id="map" role="img" aria-label="Map of Hangar 9, South End, Charlotte"></div>
+    </div>
+  </section>
+
+  <section class="dress">
+    <div class="wrap">
+      <p class="kicker mono reveal" data-i18n="dr.kicker">06 · Dress code</p>
+      <h2 class="reveal" data-i18n="dr.title">White &amp; Chrome</h2>
+      <p class="lead reveal" data-i18n="dr.body">Wear white, silver or grey — and one touch of electric blue. We’ll take care of the light.</p>
+      <div class="swatches reveal">
+        <div style="--c:#f6f7f9"><i></i><span data-i18n="dr.c1">White</span></div>
+        <div style="--c:linear-gradient(135deg,#f2f4f7,#9aa1ab 45%,#e9ecef 60%,#7d848d)"><i></i><span data-i18n="dr.c2">Chrome</span></div>
+        <div style="--c:#4a4f57"><i></i><span data-i18n="dr.c3">Graphite</span></div>
+        <div style="--c:#1aa3ff" class="accent"><i></i><span data-i18n="dr.c4">One blue accent</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rsvp" id="rsvp">
+    <div class="wrap narrow">
+      <p class="kicker mono reveal" data-i18n="rs.kicker">07 · RSVP</p>
+      <h2 class="reveal" data-i18n="rs.title">Confirm your frequency</h2>
+      <p class="reveal muted" data-i18n="rs.by">Kindly reply by August 20, 2027.</p>
+
+      <form id="rsvpForm" class="reveal" novalidate>
+        <label><span data-i18n="rs.name">Full name</span><input name="name" required autocomplete="name"></label>
+        <label><span data-i18n="rs.company">Company</span><input name="company" autocomplete="organization"></label>
+        <label><span data-i18n="rs.email">Email</span><input name="email" type="email" required autocomplete="email"></label>
+        <fieldset>
+          <legend data-i18n="rs.guests">Guests</legend>
+          <div class="seg">
+            <label><input type="radio" name="guests" value="1" checked><span data-i18n="rs.g1">Just me</span></label>
+            <label><input type="radio" name="guests" value="2"><span data-i18n="rs.g2">Me + 1</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="rs.menu">Menu</legend>
+          <div class="seg three">
+            <label><input type="radio" name="menu" value="tasting" checked><span data-i18n="rs.m1">Tasting</span></label>
+            <label><input type="radio" name="menu" value="vegetarian"><span data-i18n="rs.m2">Vegetarian</span></label>
+            <label><input type="radio" name="menu" value="vegan"><span data-i18n="rs.m3">Vegan</span></label>
+          </div>
+        </fieldset>
+        <label class="full"><span data-i18n="rs.note">Anything we should know?</span><textarea name="note" rows="3"></textarea></label>
+        <p class="err" id="formErr" hidden data-i18n="rs.err">Please fill in your name and a valid email.</p>
+        <button class="btn btn-primary full" type="submit" data-i18n="rs.send">Send signal</button>
+      </form>
+
+      <div class="pass-wrap" id="passWrap" hidden>
+        <p class="kicker mono" data-i18n="ps.kicker">Access granted</p>
+        <div class="pass" id="pass">
+          <div class="pass-top">
+            <span class="mono">SIGNAL ’27</span>
+            <span class="mono" id="passId">SG27-0000</span>
+          </div>
+          <div class="pass-mid">
+            <div>
+              <p class="mono label" data-i18n="ps.guest">Guest</p>
+              <p class="pass-name" id="passName">—</p>
+              <p class="pass-co" id="passCo"></p>
+              <p class="mono label" data-i18n="ps.admits">Admits</p>
+              <p id="passAdmits">1</p>
+            </div>
+            <div class="qr" id="qr"></div>
+          </div>
+          <div class="pass-bot mono">
+            <span data-i18n="meta.dateShort">Sep 16, 2027 · 6:30 PM</span>
+            <span>Hangar 9 · Charlotte</span>
+          </div>
+        </div>
+        <p class="muted center" data-i18n="ps.show">Show this QR code at the door.</p>
+        <div class="cal">
+          <button class="btn btn-ghost" id="icsBtn" data-i18n="ps.ics">Add to calendar (.ics)</button>
+          <a class="btn btn-ghost" id="gcalBtn" target="_blank" rel="noopener" data-i18n="ps.gcal">Google Calendar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="serif" data-i18n="ft.line">Signal received. See you on the frequency.</p>
+    <p class="mono small">Veyra Labs · SIGNAL ’27 · Charlotte, NC</p>
+    <p class="mono small dim" data-i18n="ft.demo">Fictional event · design demo</p>
+  </footer>
+</main>
+
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>window.INTRO_CFG = { video: "assets/open.mp4", light: { x: 1288, y: 780 } };</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
