@@ -361,9 +361,9 @@ export function startIntro({ canvas, onDone, onReady, cfg = {} }) {
     // obálka vždy vyplní celou obrazovku (ořez na formát), žádné tmavé okraje
     // PC: celá obálka od kraje ke kraji; mobil na výšku: obálka cca 115 % šířky displeje
     const envW = C.env.w, envH = C.env.h;
-    baseZ = (W / H < 1)
-      ? (envW / 1.15) / camera.aspect / (2 * tan)
-      : Math.min(envH * 0.965, envW * 0.965 / camera.aspect) / (2 * tan); // na šířku: obálka vyplní celé okno, bez černého pozadí
+    // obálka vždy vyplní celé okno (ořez na formát, bez tmavého pozadí); na mobilu na výšku jen minimální zoom
+    const k = (W / H < 1) ? 0.985 : 0.965;
+    baseZ = Math.min(envH * k, envW * k / camera.aspect) / (2 * tan);
     oU.uFog.value = 0;
     pU.uPx.value = dpr * (H / 900) * 4;
     oU.uAsp.value = W / H;
@@ -436,7 +436,7 @@ export function startIntro({ canvas, onDone, onReady, cfg = {} }) {
     group.rotation.y = tilt.x * 0.012; group.rotation.x = -tilt.y * 0.01;
 
     if (state === 'idle') {
-      const b = -Math.abs(Math.sin(now * 0.8)) * 0.004;
+      const b = (W / H < 1) ? 0 : -Math.abs(Math.sin(now * 0.8)) * 0.004;
       group.position.z = b;
     } else if (useVideo) {
       videoFlow(now - t0);
