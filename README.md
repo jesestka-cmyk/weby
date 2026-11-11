@@ -10,3 +10,4 @@ Sbírka webů. Každý web má vlastní složku a vlastní Vercel projekt (Root 
 | `signal/` | SIGNAL ’27 — Private Launch Night, fiktivní tech akce (Charlotte), živá pečeť ve WebGL + video otevření, dešifrování hosta, RSVP s QR |
 | `cipher-room/` | THE CIPHER ROOM — otevření tajného baru (Charlotte), černá obálka s voskovou pečetí, scrollovací příběh (GSAP), kódový zámek, RSVP s QR |
 | `bird/` | BLUEBIRD — Innovation security, fiktivní kyberbezpečnost; hero s AI videem ptáka (Higgsfield), 10 sekcí, sticky menu, radar, pricing, kontakt |
+| `kodiaq-rs/` | KODIAQ RS — koncept firemní pozvánky (neoficiální ukázka); úvod s oponou (AI video Flow, přehráno pozpátku), odhalení auta, hvězdný skok, holografická karta s rezervací prohlídky / testovací jízdy v Praze a .ics |
