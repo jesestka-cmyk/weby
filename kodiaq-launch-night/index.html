@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kodiaq RS Launch Night – pozvánka (koncept)</title>
+<meta name="theme-color" content="#03050a">
+<style>
+:root{
+  --g:#6ab8ff; --g2:#2f8fff; --ink:#eef3fb; --mut:#98a3b8; --line:rgba(106,184,255,.25);
+  --col:min(100vw, calc(100vh * 9 / 16));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#03050a;scrollbar-gutter:stable}
+body{color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:#03050a;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body.locked{overflow:hidden;height:100%}
+img{display:block}
+.bg{position:fixed;inset:0;background:url(media/kodiaq_konec.jpg) center/cover;filter:blur(50px) brightness(.25) saturate(1.3);transform:scale(1.25);z-index:0}
+main{position:relative;z-index:1;width:var(--col);margin:0 auto;background:#03050a;box-shadow:0 0 120px rgba(0,0,0,.8)}
+section{position:relative;width:100%}
+.screen{height:100vh;height:100svh;position:relative;overflow:hidden}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.badge{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);width:var(--col);text-align:right;padding-right:12px;font-size:8px;letter-spacing:.2em;color:rgba(255,255,255,.22);z-index:60;pointer-events:none}
+
+/* ---------- 0 OPONA ---------- */
+#intro{position:fixed;top:0;left:50%;transform:translateX(-50%);width:var(--col);height:100vh;height:100svh;z-index:50;background:#000;overflow:hidden}
+#intro.gone{opacity:0;pointer-events:none;transition:opacity 1s ease}
+#vOpen{opacity:0}
+.sheen{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(40% 30% at 50% 12%,rgba(255,120,140,.16),transparent 70%);animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%,100%{opacity:.4}50%{opacity:1}}
+#intro.opening .sheen{opacity:0;transition:opacity .4s;animation:none}
+.gap{position:absolute;left:50%;top:24%;height:48%;width:44px;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 55%,rgba(255,190,110,.55),rgba(255,150,60,.12) 45%,transparent 75%);
+  mix-blend-mode:screen;filter:blur(6px);animation:breathe 3.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.15;transform:translateX(-50%) scaleX(.7)}50%{opacity:.9;transform:translateX(-50%) scaleX(1.15)}}
+.tapHint{position:absolute;left:0;right:0;bottom:11%;text-align:center;pointer-events:none}
+.tapHint p{font-size:11px;font-weight:300;letter-spacing:.38em;text-transform:uppercase;color:rgba(255,226,184,.9);text-shadow:0 0 12px rgba(255,170,80,.45);animation:fadeT 4.2s ease-in-out infinite}
+@keyframes fadeT{0%,100%{opacity:.2}50%{opacity:.55}}
+.spark{position:absolute;left:50%;bottom:15%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#ffd9a3;box-shadow:0 0 10px 3px rgba(255,180,90,.7);opacity:0;animation:spark 4.2s ease-in-out infinite 1s}
+@keyframes spark{0%{transform:translateY(0);opacity:0}15%{opacity:.8}70%{opacity:.6}85%{transform:translateY(-34vh);opacity:0}100%{opacity:0}}
+#intro.opening .gap,#intro.opening .tapHint,#intro.opening .spark{animation:none;opacity:0;transition:opacity .5s}
+
+/* ---------- 1+2 HERO ---------- */
+#hero{height:200vh}
+#hero .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#heroImg{transform-origin:47% 44%;will-change:transform}
+#fog{display:none;position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
+.lamps{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;animation:lamp 3.2s ease-in-out infinite;
+  background:radial-gradient(7% 2.6% at 14% 50%,rgba(225,245,255,.9),transparent 70%),radial-gradient(7% 2.6% at 47% 50%,rgba(225,245,255,.9),transparent 70%)}
+@keyframes lamp{0%,100%{opacity:.25}50%{opacity:.75}}
+.floor{display:none;position:absolute;left:0;right:0;bottom:0;height:42%;pointer-events:none;mix-blend-mode:screen;opacity:.5;
+  background:linear-gradient(100deg,transparent 30%,rgba(160,200,255,.10) 45%,transparent 60%);background-size:300% 100%;animation:floor 7s linear infinite;
+  -webkit-mask:linear-gradient(to bottom,transparent,#000 40%);mask:linear-gradient(to bottom,transparent,#000 40%)}
+@keyframes floor{from{background-position:120% 0}to{background-position:-120% 0}}
+.blackout{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.sig{position:absolute;left:0;right:0;top:9%;text-align:center;pointer-events:none}
+.sig svg{width:86%;height:auto;overflow:visible}
+.sig .line{stroke:var(--g);stroke-width:2;fill:none;filter:drop-shadow(0 0 6px var(--g)) drop-shadow(0 0 18px rgba(106,184,255,.6))}
+.sig h1{font-size:clamp(34px,11vw,56px);font-weight:900;letter-spacing:.06em;line-height:1;margin-top:10px;
+  background:linear-gradient(180deg,#fff,#b6d8c8);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 100% 0 0)}
+.sig h2{font-size:12px;letter-spacing:.55em;color:var(--g);margin-top:12px;opacity:0}
+.sig .for{font-size:13px;color:var(--mut);margin-top:16px;opacity:0;letter-spacing:.06em}
+.scrollHint{position:absolute;left:0;right:0;bottom:6%;text-align:center;font-size:10px;letter-spacing:.4em;color:rgba(255,255,255,.5);pointer-events:none}
+.scrollHint i{display:block;width:1px;height:34px;margin:10px auto 0;background:linear-gradient(var(--g),transparent);animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- 3+4 INTERIER ---------- */
+#inside{height:280vh;margin-top:-100vh;z-index:2}
+#inside .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000}
+#intCv{position:absolute;inset:0;width:100%;height:100%;transform-origin:52.8% 48.7%}
+.words{position:absolute;left:8%;right:8%;bottom:14%;font-size:clamp(26px,8vw,40px);font-weight:300;line-height:1.15}
+.words span{display:inline-block;opacity:0;transform:translateY(24px);filter:blur(6px);margin-right:.25em}
+.words b{font-weight:800;color:var(--g)}
+.hud{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.panel{width:86%;border-radius:22px;padding:26px 22px;background:linear-gradient(160deg,rgba(14,36,52,.92),rgba(6,12,20,.95));
+  border:1px solid rgba(140,200,255,.25);box-shadow:0 0 60px rgba(90,170,255,.25),inset 0 1px 0 rgba(255,255,255,.08);
+  transform:scale(.18);opacity:0;transform-origin:52.8% 48.7%}
+.panel .top{display:flex;justify-content:space-between;font-size:11px;color:#9cc3e6;letter-spacing:.12em}
+.panel .big{font-size:clamp(40px,13vw,64px);font-weight:200;letter-spacing:-.02em;margin:18px 0 2px}
+.panel .day{font-size:15px;color:#cfe6ff}
+.panel .place{margin-top:14px;font-size:13px;color:#9cc3e6;line-height:1.5}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
+.count div{background:rgba(255,255,255,.04);border:1px solid rgba(140,200,255,.18);border-radius:12px;padding:10px 0;text-align:center}
+.count b{display:block;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.count small{font-size:9px;letter-spacing:.15em;color:#9cc3e6;text-transform:uppercase}
+
+/* ---------- obecne bloky ---------- */
+.block{padding:96px 8% 80px}
+.eyebrow{font-size:10px;letter-spacing:.45em;color:var(--g);text-transform:uppercase}
+.h{font-size:clamp(28px,8.5vw,44px);font-weight:800;line-height:1.05;margin:12px 0 14px}
+.p{color:var(--mut);font-size:15px;line-height:1.6}
+.rv{opacity:0;transform:translateY(30px)}
+
+/* ---------- 5 PROGRAM ---------- */
+#program{background:radial-gradient(120% 60% at 50% 0%,rgba(63,217,142,.08),transparent 60%)}
+.tl{position:relative;margin-top:34px;padding-left:34px}
+.tl .rail{position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,.08);border-radius:2px}
+.tl .fill{position:absolute;left:9px;top:6px;width:2px;height:0;background:var(--g);box-shadow:0 0 12px var(--g);border-radius:2px}
+.ti{position:relative;padding:0 0 30px;opacity:.28;transition:opacity .5s}
+.ti.on{opacity:1}
+.ti::before{content:"";position:absolute;left:-30px;top:5px;width:12px;height:12px;border-radius:50%;background:#0b1220;border:2px solid rgba(255,255,255,.2);transition:.4s}
+.ti.on::before{background:var(--g);border-color:var(--g);box-shadow:0 0 14px var(--g)}
+.ti time{font-size:13px;color:var(--g);font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.ti h4{font-size:19px;margin:4px 0 4px}
+.ti p{font-size:14px;color:var(--mut);line-height:1.5}
+
+/* ---------- 6 RAUT ---------- */
+#venue .screen img{transform:scale(1.15)}
+#venue .shade{position:absolute;inset:0;background:linear-gradient(to top,#03050a 8%,rgba(3,5,10,.2) 55%,rgba(3,5,10,.75))}
+#venue .txt{position:absolute;left:8%;right:8%;bottom:9%}
+#menu{height:400vh}
+#menu .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;perspective:1000px}
+#menu .head{position:absolute;top:7%;left:8%;right:8%}
+.dish{position:absolute;width:78%;height:62%;top:22%;border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.06);
+  transform-style:preserve-3d;will-change:transform;background:#000}
+.dish img{width:100%;height:100%;object-fit:cover}
+.dish .cap{position:absolute;left:0;right:0;bottom:0;padding:60px 18px 18px;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.dish .cap small{font-size:10px;letter-spacing:.35em;color:var(--g)}
+.dish .cap h4{font-size:20px;margin-top:6px}
+.dish .cap p{font-size:13px;color:#b8c9c1;margin-top:4px;line-height:1.45}
+.dish .glare{position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 40% at var(--gx,50%) var(--gy,20%),rgba(255,255,255,.12),transparent 60%)}
+
+/* ---------- 7 DETAILY ---------- */
+.scan{position:relative;aspect-ratio:1;border-radius:20px;overflow:hidden;margin:26px 0 12px;background:#0a0d14}
+.scan img{width:100%;height:100%;object-fit:cover;clip-path:inset(0 100% 0 0)}
+.scan .beam{position:absolute;top:0;bottom:0;left:0;width:3px;background:var(--g);box-shadow:0 0 18px 4px rgba(106,184,255,.7),0 0 60px 10px rgba(106,184,255,.25);opacity:0}
+.feat{display:flex;gap:12px;align-items:flex-start;margin:14px 0}
+.feat i{flex:0 0 26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--g);font-style:normal;font-size:12px}
+.feat b{display:block;font-size:15px}
+.feat span{font-size:13px;color:var(--mut)}
+
+/* ---------- 8 MISTO ---------- */
+.map{position:relative;aspect-ratio:1;border-radius:20px;overflow:hidden;margin:26px 0 18px;background:#060a14;border:1px solid var(--line)}
+.map svg{width:100%;height:100%}
+.map .river{stroke:rgba(80,160,255,.55);stroke-width:14;fill:none;stroke-linecap:round}
+.map .st{stroke:rgba(255,255,255,.08);stroke-width:2;fill:none}
+.map .st2{stroke:rgba(255,255,255,.14);stroke-width:3;fill:none}
+.map .route{stroke:var(--g);stroke-width:3;fill:none;stroke-dasharray:6 8;filter:drop-shadow(0 0 4px var(--g))}
+.pin-dot{position:absolute;left:58%;top:36%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--g);box-shadow:0 0 18px var(--g)}
+.pin-dot::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2px solid var(--g);animation:ping 2s ease-out infinite}
+@keyframes ping{from{transform:scale(.3);opacity:1}to{transform:scale(2);opacity:0}}
+.info{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:14px}
+.info span:nth-child(odd){color:var(--mut)}
+
+/* ---------- 9 RSVP ---------- */
+.fld{width:100%;margin-top:10px;padding:14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--ink);font:inherit;font-size:15px}
+.fld:focus{outline:none;border-color:var(--g)}
+.lbl{display:block;font-size:11px;letter-spacing:.2em;color:var(--mut);margin:18px 0 6px;text-transform:uppercase}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg3{grid-template-columns:1fr 1fr 1fr}
+.opt{border:1px solid var(--line);border-radius:12px;padding:12px 6px;font:inherit;font-size:13px;cursor:pointer;background:rgba(255,255,255,.02);color:var(--ink)}
+.opt.sel{border-color:var(--g);background:rgba(106,184,255,.12)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--mut);margin:16px 0;line-height:1.4}
+.chk input{margin-top:2px;accent-color:#2f8fff}
+.err{color:#ff9b9b;font-size:12px;min-height:16px;margin-bottom:8px}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;letter-spacing:.06em;width:100%;padding:17px;border-radius:99px;color:#04122b;
+  background:linear-gradient(135deg,#9dffc8,#2f8fff);box-shadow:0 10px 40px rgba(63,217,142,.4)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.row{display:flex;gap:10px;margin-top:12px}
+.row .btn{padding:14px 8px;font-size:13px}
+
+.ticket{position:relative;margin-top:26px;border-radius:22px;overflow:hidden;background:linear-gradient(160deg,#0f1d38,#060a14);border:1px solid var(--line);
+  transform-origin:top center}
+.ticket .tt{padding:20px}
+.ticket .tt small{font-size:10px;letter-spacing:.35em;color:var(--g)}
+.ticket .tt h3{font-size:24px;margin:6px 0 2px}
+.ticket .tt .nm{font-size:15px;color:#cfe;margin-top:10px}
+.ticket .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;font-size:12px;color:var(--mut)}
+.ticket .grid b{display:block;color:var(--ink);font-size:14px;margin-top:2px}
+.ticket .perf{height:0;border-top:2px dashed rgba(106,184,255,.25);margin:0 16px;position:relative}
+.ticket .perf::before,.ticket .perf::after{content:"";position:absolute;top:-12px;width:24px;height:24px;border-radius:50%;background:#03050a}
+.ticket .perf::before{left:-28px}.ticket .perf::after{right:-28px}
+.ticket .qr{padding:20px;display:flex;gap:16px;align-items:center}
+.ticket .qr canvas{width:120px;height:120px;border-radius:10px;background:#fff;padding:6px}
+.ticket .qr p{font-size:12px;color:var(--mut);line-height:1.5}
+.ticket .qr code{display:block;font-size:16px;color:var(--g);letter-spacing:.12em;margin-top:6px}
+footer{padding:40px 8% 60px;text-align:center;font-size:12px;color:var(--mut);line-height:1.7;border-top:1px solid rgba(255,255,255,.05)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+
+/* ---------- TAJNÝ HOST ---------- */
+#secret{padding:40px 26px 70px}
+.los{position:relative;margin-top:28px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:linear-gradient(160deg,#0b1222,#05070d)}
+.los .under{padding:30px 24px 28px}
+.los .under small{display:block;font-size:10px;letter-spacing:.42em;color:var(--g);text-transform:uppercase}
+.los .under h4{font-size:34px;font-weight:300;line-height:1.08;margin:14px 0 12px;letter-spacing:-.01em}
+.los .under h4 b{font-weight:800}
+.los .under p{font-size:13px;color:var(--mut);line-height:1.5}
+.los canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;transition:opacity .8s}
+.los.done canvas{opacity:0;pointer-events:none}
+.losHint{font-size:10px;letter-spacing:.35em;color:var(--mut);margin-top:14px;text-transform:uppercase;transition:color .6s}
+.los.done + .losHint{color:var(--g)}
+</style>
+</head>
+<body class="locked">
+<div class="bg"></div>
+<div class="badge">KONCEPT · NEOFICIÁLNÍ UKÁZKA</div>
+
+<!-- 0 OPONA -->
+<div id="intro">
+  <img class="cover" id="vLoop" src="media/opona_zavrena.jpg" alt=""><div class="sheen"></div>
+  <video class="cover" id="vOpen" src="media/opona_otevreni.mp4" muted playsinline preload="auto"></video>
+  
+  <div class="tapHint"><p>Odhalte, co je za oponou</p></div>
+</div>
+
+<main>
+  <!-- 1+2 HERO -->
+  <section id="hero"><div class="pin">
+    <img class="cover" id="heroImg" src="media/kodiaq_konec.jpg" alt="Nový Škoda Kodiaq RS na pódiu">
+    <img class="cover" id="heroInt" src="media/int/001.jpg" alt="" style="opacity:0">
+    <canvas id="fog"></canvas>
+    
+    <div class="floor"></div>
+    <div class="sig">
+      <svg viewBox="0 0 400 20"><path class="line" id="ledLine" d="M10 10 H390"/></svg>
+      <h1 id="sigTitle">KODIAQ RS</h1>
+      <h2 id="sigSub">LAUNCH NIGHT</h2>
+      <p class="for" id="sigFor">Osobní pozvánka</p>
+    </div>
+    <div class="scrollHint" id="scrollHint">SCROLLUJTE<i></i></div>
+    <div class="blackout" id="blackout"></div>
+  </div></section>
+
+  <!-- 3+4 INTERIER + DATUM -->
+  <section id="inside"><div class="pin">
+    <canvas id="intCv"></canvas>
+    <div class="words" id="words"><span>Večer,</span><span>kdy</span><span><b>RS</b></span><span>poprvé</span><span>uvidíte</span><span><b>zblízka.</b></span></div>
+    <div class="hud"><div class="panel" id="panel">
+      <div class="top"><span>KODIAQ RS · POZVÁNKA</span><span id="clock">--:--</span></div>
+      <div class="big">4. 12.</div>
+      <div class="day">Čtvrtek 2026 · od 18:00</div>
+      <div class="place">Hala Holešovice, Praha 7<br>Uvedení nového Kodiaqu RS</div>
+      <div class="count" id="count"><div><b>0</b><small>dní</small></div><div><b>0</b><small>hod</small></div><div><b>0</b><small>min</small></div><div><b>0</b><small>s</small></div></div>
+    </div></div>
+  </div></section>
+
+  <!-- 5 PROGRAM -->
+  <section id="program" class="block">
+    <div class="eyebrow rv">Program večera</div>
+    <h3 class="h rv">Jeden večer.<br>Jeden nový RS.</h3>
+    <div class="tl" id="tl"><div class="rail"></div><div class="fill" id="tlFill"></div>
+      <div class="ti"><time>18:00</time><h4>Příchod a welcome drink</h4><p>Signature koktejl v barvě Race Blue a lehké jednohubky.</p></div>
+      <div class="ti"><time>18:45</time><h4>Odhalení vozu</h4><p>Světelná show a první pohled na nový Kodiaq RS.</p></div>
+      <div class="ti"><time>19:15</time><h4>Představení s designérem</h4><p>Co dělá RS výjimečným – zblízka a bez prezentací.</p></div>
+      <div class="ti"><time>19:45</time><h4>Raut</h4><p>Tříchodové menu od šéfkuchaře, víno a nealko párování.</p></div>
+      <div class="ti"><time>20:30</time><h4>Spolujízdy a simulátor</h4><p>Krátké svezení s instruktorem po předchozí rezervaci.</p></div>
+      <div class="ti"><time>21:00</time><h4>Tajný host večera, pak DJ do 23:00</h4><p>Kdo zahraje živě? Setřete los níže.</p></div>
+    </div>
+  </section>
+
+
+  <!-- 5b TAJNÝ HOST -->
+  <section id="secret" class="block">
+    <div class="eyebrow rv">Tajný host večera</div>
+    <h3 class="h rv">Ve 21:00 zhasneme.<br>A pak to začne.</h3>
+    <div class="los rv" id="los">
+      <div class="under">
+        <small>Tajný host · živě 21:00</small>
+        <h4>Václav Noid<br><b>Bárta</b></h4>
+        <p>Exkluzivní vystoupení jen pro hosty večera.</p>
+      </div>
+      <canvas id="losCv" data-lenis-prevent></canvas>
+    </div>
+    <div class="losHint" id="losHint">Kdo zahraje? Setřete kartu.</div>
+  </section>
+
+  <!-- 6 RAUT -->
+  <section id="venue"><div class="screen">
+    <img class="cover" id="venueImg" src="media/sal.jpg" alt="Industriální hala připravená na večer">
+    <div class="shade"></div>
+    <div class="txt"><div class="eyebrow rv">Místo konání</div><h3 class="h rv">Industriální hala.<br>Modré světlo.</h3><p class="p rv">Prostor, kde se cihly potkávají s LED a ocel s večerní atmosférou.</p></div>
+  </div></section>
+
+  <section id="menu"><div class="pin">
+    <div class="head"><div class="eyebrow">Raut</div><h3 class="h" style="margin-bottom:0">Menu večera</h3></div>
+    <div class="dish" data-i="0"><img src="media/bar.jpg" alt="Welcome drink"><div class="glare"></div><div class="cap"><small>WELCOME</small><h4>Race Blue Spritz</h4><p>Signature koktejl večera, i v nealko verzi.</p></div></div>
+    <div class="dish" data-i="1"><img src="media/predkrm.jpg" alt="Předkrm"><div class="glare"></div><div class="cap"><small>PŘEDKRM</small><h4>Tatarák z hovězí svíčkové</h4><p>Uzený žloutek, kapary, bylinkový olej.</p></div></div>
+    <div class="dish" data-i="2"><img src="media/hlavni.jpg" alt="Hlavní chod"><div class="glare"></div><div class="cap"><small>HLAVNÍ CHOD</small><h4>Kachní prsa</h4><p>Višňová omáčka, celerové pyré, výhonky.</p></div></div>
+    <div class="dish" data-i="3"><img src="media/dezert.jpg" alt="Dezert"><div class="glare"></div><div class="cap"><small>DEZERT</small><h4>Čokoládová koule</h4><p>Pistácie, malinový gel, plátkové zlato.</p></div></div>
+  </div></section>
+
+  <!-- 7 DETAILY -->
+  <section id="detail" class="block">
+    <div class="eyebrow rv">Na co se těšit</div>
+    <h3 class="h rv">RS v detailu</h3>
+    <div class="scan" data-scan><img src="media/predek.jpg" alt="Kodiaq RS zepředu"><div class="beam"></div></div>
+    <div class="feat rv"><i>1</i><div><b>Sportovní RS design</b><span>Černé detaily, RS kola a výrazná maska.</span></div></div>
+    <div class="feat rv"><i>2</i><div><b>Světelný podpis</b><span>Úzké světlomety spojené světelným pruhem.</span></div></div>
+    <div class="scan" data-scan><img src="media/zad.jpg" alt="Kodiaq RS zezadu"><div class="beam"></div></div>
+    <div class="feat rv"><i>3</i><div><b>Interiér RS</b><span>Sportovní sedadla a velký centrální displej.</span></div></div>
+  </section>
+
+  <!-- 8 MISTO -->
+  <section id="place" class="block">
+    <div class="eyebrow rv">Kde nás najdete</div>
+    <h3 class="h rv">Hala Holešovice</h3>
+    <div class="map rv">
+      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+        <path class="st" d="M0 60 L400 90 M0 150 L400 130 M0 250 L400 270 M0 330 L400 310 M60 0 L90 400 M150 0 L140 400 M260 0 L280 400 M340 0 L320 400"/>
+        <path class="st2" d="M0 200 C120 180 180 220 400 190 M200 0 C210 120 190 260 210 400"/>
+        <path class="river" d="M-20 300 C80 280 120 200 170 170 C220 140 230 90 300 70 C350 56 380 90 420 120"/>
+        <path class="route" id="route" d="M60 380 C100 330 140 300 180 260 C210 230 220 190 232 144"/>
+      </svg>
+      <div class="pin-dot"></div>
+    </div>
+    <div class="info rv">
+      <span>Adresa</span><span>Hala Holešovice, Praha 7</span>
+      <span>Doprava</span><span>Tram Výstaviště, parkování u haly</span>
+      <span>Dress code</span><span>Smart casual</span>
+      <span>Kontakt</span><span>pozvanky@kodiaq-rs.cz</span>
+    </div>
+  </section>
+
+  <!-- 9 RSVP -->
+  <section id="rsvp" class="block">
+    <div class="eyebrow rv">Potvrzení účasti</div>
+    <h3 class="h rv">Budete u toho?</h3>
+    <p class="p rv">Kapacita večera je omezená. Potvrďte prosím účast a my vám pošleme vstupenku.</p>
+    <div id="form">
+      <span class="lbl">Jméno a příjmení</span><input class="fld" id="fName" autocomplete="name">
+      <span class="lbl">E-mail</span><input class="fld" id="fMail" type="email" autocomplete="email">
+      <span class="lbl">Počet osob</span>
+      <div class="seg" data-g="ppl"><button class="opt sel" data-v="1">Jen já</button><button class="opt" data-v="2">Já + 1</button></div>
+      <span class="lbl">Spolujízda s instruktorem</span>
+      <div class="seg" data-g="ride"><button class="opt sel" data-v="ano">Mám zájem</button><button class="opt" data-v="ne">Bez jízdy</button></div>
+      <span class="lbl">Strava</span>
+      <div class="seg seg3" data-g="diet"><button class="opt sel" data-v="běžná">Běžná</button><button class="opt" data-v="vegetariánská">Vegetarián</button><button class="opt" data-v="bez lepku">Bez lepku</button></div>
+      <label class="chk"><input type="checkbox" id="fOk"> Souhlasím se zpracováním údajů pro účely akce.</label>
+      <div class="err" id="err"></div>
+      <button class="btn" id="send">Potvrdit účast</button>
+    </div>
+    <div id="done" hidden>
+      <div class="ticket" id="ticket">
+        <div class="tt"><small>VSTUPENKA</small><h3>Kodiaq RS Launch Night</h3>
+          <div class="nm" id="tName"></div>
+          <div class="grid"><div>Datum<b>Čt 4. 12. 2026</b></div><div>Čas<b>18:00</b></div><div>Místo<b>Hala Holešovice</b></div><div>Osoby<b id="tPpl">1</b></div></div>
+        </div>
+        <div class="perf"></div>
+        <div class="qr"><canvas id="qr" width="240" height="240"></canvas><p>Při vstupu ukažte tento kód.<code id="tCode"></code></p></div>
+      </div>
+      <div class="row"><button class="btn" id="ics">Do kalendáře</button><button class="btn ghost" id="save">Uložit vstupenku</button></div>
+    </div>
+  </section>
+
+  <footer>Kodiaq RS Launch Night · koncept interaktivní pozvánky<br>Neoficiální ukázka – registrace se v této verzi nikam neodesílá.</footer>
+</main>
+
+<script src="lib/gsap.min.js"></script>
+<script src="lib/ScrollTrigger.min.js"></script>
+<script src="lib/lenis.min.js"></script>
+<script src="lib/qrcode.js"></script>
+<script>
+(() => {
+const $=id=>document.getElementById(id);
+gsap.registerPlugin(ScrollTrigger);
+const EVENT=new Date('2026-12-04T18:00:00+01:00');
+const jm=new URLSearchParams(location.search).get('jmeno');
+if(jm){ $('sigFor').textContent='Pozvánka pro '+jm; $('fName').value=jm; }
+
+/* ---------- smooth scroll ---------- */
+const lenis=new Lenis({lerp:.09,smoothWheel:true});
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);
+lenis.stop();
+
+/* ---------- 0 opona ---------- */
+const intro=$('intro'), vLoop=$('vLoop'), vOpen=$('vOpen');
+let opened=false; const T0=40/24;
+vOpen.addEventListener('loadedmetadata',()=>{ vOpen.currentTime=T0; },{once:true});
+vOpen.addEventListener('playing',()=>{ vOpen.style.opacity=1; vLoop.style.opacity=0; },{once:true});
+if(vOpen.readyState>=1) vOpen.currentTime=T0;
+intro.addEventListener('click',()=>{
+  if(opened) return; opened=true; intro.classList.add('opening');
+  vOpen.play().catch(()=>{});
+});
+const finish=()=>{
+  if(intro.classList.contains('gone')) return;
+  intro.classList.add('gone'); document.body.classList.remove('locked'); lenis.start();
+  window.scrollTo(0,0); ScrollTrigger.refresh();
+  gsap.to('#ledLine',{strokeDashoffset:0,duration:1.4,ease:'power2.inOut',delay:.4});
+  gsap.to('#sigTitle',{clipPath:'inset(0 0% 0 0)',duration:1.2,ease:'power3.inOut',delay:1});
+  gsap.to(['#sigSub','#sigFor'],{opacity:1,duration:1,stagger:.3,delay:1.9});
+};
+vOpen.addEventListener('ended',finish);
+
+/* LED linka */
+const led=$('ledLine'); const L=led.getTotalLength(); led.style.strokeDasharray=L; led.style.strokeDashoffset=L;
+
+/* ---------- 1 ziva mlha ---------- */
+const fog=$('fog'), fx=fog.getContext('2d'); let FW,FH;
+const puffs=Array.from({length:14},(_,i)=>({x:Math.random(),y:.15+Math.random()*.55,r:.18+Math.random()*.22,vx:(Math.random()-.5)*.012,vy:-.004-Math.random()*.006,a:.05+Math.random()*.07,ph:Math.random()*6}));
+function fogSize(){const r=fog.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5); FW=fog.width=r.width*d; FH=fog.height=r.height*d;}
+fogSize(); addEventListener('resize',fogSize);
+let last=performance.now();
+function fogLoop(t){
+  const dt=Math.min(.05,(t-last)/1000); last=t;
+  fx.clearRect(0,0,FW,FH);
+  for(const p of puffs){
+    p.x+=p.vx*dt*10; p.y+=p.vy*dt*10; p.ph+=dt*.6;
+    if(p.y<-.1){p.y=.75; p.x=.3+Math.random()*.4;} if(p.x<-.3)p.x=1.3; if(p.x>1.3)p.x=-.3;
+    const cx=p.x*FW, cy=p.y*FH, rr=p.r*FW*(1+.1*Math.sin(p.ph));
+    const g=fx.createRadialGradient(cx,cy,0,cx,cy,rr);
+    const a=p.a*(.7+.3*Math.sin(p.ph*1.3));
+    g.addColorStop(0,`rgba(205,220,240,${a})`); g.addColorStop(1,'rgba(205,220,240,0)');
+    fx.fillStyle=g; fx.beginPath(); fx.arc(cx,cy,rr,0,7); fx.fill();
+  }
+  // dva reflektory – jemné dýchání
+  for(const [x0,ph] of [[.27,0],[.70,2.1]]){
+    const s=.05+.035*Math.sin(t/1500+ph);
+    const cg=fx.createLinearGradient(0,0,0,FH*.6); cg.addColorStop(0,`rgba(232,238,248,${s})`); cg.addColorStop(1,'rgba(232,238,248,0)');
+    fx.fillStyle=cg; fx.beginPath(); fx.moveTo(FW*(x0-.03),0); fx.lineTo(FW*(x0+.03),0); fx.lineTo(FW*(x0+.2),FH*.6); fx.lineTo(FW*(x0-.2),FH*.6); fx.closePath(); fx.fill();
+  }
+  requestAnimationFrame(fogLoop);
+}
+// mlha vypnuta
+
+/* ---------- 2 hero scroll: přiblížení k čelnímu sklu a tma ---------- */
+gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom bottom',scrub:true}})
+  .to('#scrollHint',{opacity:0,duration:.1},0)
+  .to('.sig',{y:-40,opacity:0,duration:.4},.05)
+  .to('#heroInt',{opacity:1,ease:'none',duration:.5},.45);
+gsap.set('#inside .pin',{autoAlpha:0});
+ScrollTrigger.create({trigger:'#inside',start:'top top',onEnter:()=>gsap.set('#inside .pin',{autoAlpha:1}),onLeaveBack:()=>gsap.set('#inside .pin',{autoAlpha:0})});
+
+/* ---------- 3 interier: snímky řízené scrollem ---------- */
+const N=66, frames=[], cv=$('intCv'), cx=cv.getContext('2d');
+for(let i=1;i<=N;i++){ const im=new Image(); im.src=`media/int/${String(i).padStart(3,'0')}.jpg`; frames.push(im); }
+function cvSize(){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2); cv.width=r.width*d; cv.height=r.height*d; draw(cur);}
+let cur=0;
+function draw(i){
+  const im=frames[Math.max(0,Math.min(N-1,Math.round(i)))]; if(!im.complete||!im.naturalWidth) return;
+  const W=cv.width,H=cv.height, s=Math.max(W/im.naturalWidth,H/im.naturalHeight), w=im.naturalWidth*s, h=im.naturalHeight*s;
+  cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);
+}
+frames[0].onload=()=>draw(0); addEventListener('resize',cvSize); setTimeout(cvSize,50);
+const words=[...document.querySelectorAll('#words span')];
+const tlIn=gsap.timeline({scrollTrigger:{trigger:'#inside',start:'top top',end:'bottom bottom',scrub:.6}});
+const fr={f:0};
+tlIn.to(fr,{f:N-1,ease:'none',duration:.46,onUpdate:()=>{cur=fr.f; draw(cur);}},.16)
+  .to(words,{opacity:1,y:0,filter:'blur(0px)',stagger:.04,duration:.08},.08)
+  .to('#words',{opacity:0,y:-30,duration:.06},.5)
+    .to('#panel',{opacity:1,scale:1,ease:'power3.out',duration:.22},.7)
+  .to('#intCv',{opacity:.12,duration:.15},.66);
+
+/* odpočet + hodiny */
+function tick(){
+  let d=Math.max(0,EVENT-new Date()); const v=[Math.floor(d/864e5),Math.floor(d/36e5)%24,Math.floor(d/6e4)%60,Math.floor(d/1e3)%60];
+  document.querySelectorAll('#count b').forEach((b,i)=>b.textContent=v[i]);
+  const n=new Date(); $('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+/* ---------- obecné odhalování textů ---------- */
+gsap.utils.toArray('.rv').forEach(el=>gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+
+/* ---------- 5 program ---------- */
+gsap.to('#tlFill',{height:'calc(100% - 12px)',ease:'none',scrollTrigger:{trigger:'#tl',start:'top 70%',end:'bottom 60%',scrub:true}});
+document.querySelectorAll('.ti').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 68%',onEnter:()=>el.classList.add('on'),onLeaveBack:()=>el.classList.remove('on')}));
+
+/* ---------- 6 místo + menu ---------- */
+gsap.to('#venueImg',{scale:1,yPercent:-6,ease:'none',scrollTrigger:{trigger:'#venue',start:'top bottom',end:'bottom top',scrub:true}});
+const dishes=gsap.utils.toArray('.dish');
+dishes.forEach((d,i)=>gsap.set(d,{yPercent:i?140:0,rotate:i?(i%2?6:-6):0,zIndex:i+1}));
+const tlM=gsap.timeline({scrollTrigger:{trigger:'#menu',start:'top top',end:'bottom bottom',scrub:.5}});
+dishes.forEach((d,i)=>{ if(!i) return;
+  tlM.to(d,{yPercent:0,rotate:(i%2?2:-2),ease:'power2.out',duration:1},i-1)
+     .to(dishes[i-1],{scale:.9,opacity:.35,filter:'blur(2px)',duration:1},i-1);
+});
+/* náklon karet za prstem / myší */
+const tilt=(x,y)=>dishes.forEach(d=>{d.style.setProperty('--gx',(50+x*40)+'%');d.style.setProperty('--gy',(20+y*30)+'%');
+  gsap.to(d,{rotateY:x*10,rotateX:-y*8,duration:.6,overwrite:'auto'});});
+$('menu').addEventListener('pointermove',e=>{const r=e.currentTarget.querySelector('.pin').getBoundingClientRect(); tilt((e.clientX-r.left)/r.width-.5,(e.clientY-r.top)/r.height-.5);});
+addEventListener('deviceorientation',e=>{ if(e.gamma==null) return; tilt(Math.max(-1,Math.min(1,e.gamma/30))/2,Math.max(-1,Math.min(1,(e.beta-45)/30))/2); });
+
+/* ---------- 7 světelný sken ---------- */
+document.querySelectorAll('[data-scan]').forEach(s=>{
+  const img=s.querySelector('img'), beam=s.querySelector('.beam');
+  gsap.timeline({scrollTrigger:{trigger:s,start:'top 80%',end:'top 25%',scrub:true}})
+    .set(beam,{opacity:1})
+    .fromTo(img,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',ease:'none'},0)
+    .fromTo(beam,{left:'0%'},{left:'100%',ease:'none'},0)
+    .to(beam,{opacity:0,duration:.1});
+});
+
+/* ---------- 8 mapa ---------- */
+const route=$('route'); const RL=route.getTotalLength(); route.style.strokeDasharray=`6 8`;
+gsap.fromTo(route,{strokeDashoffset:RL},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:'.map',start:'top 85%',end:'bottom 50%',scrub:true}});
+
+/* ---------- 9 RSVP + vstupenka ---------- */
+const val={ppl:'1',ride:'ano',diet:'běžná'};
+document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+  g.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); val[g.dataset.g]=b.dataset.v; }));
+let code='';
+$('send').onclick=()=>{
+  const n=$('fName').value.trim(), m=$('fMail').value.trim(); let e='';
+  if(n.length<3) e='Vyplňte jméno.'; else if(!/^\S+@\S+\.\S+$/.test(m)) e='Zkontrolujte e-mail.'; else if(!$('fOk').checked) e='Potvrďte souhlas se zpracováním údajů.';
+  $('err').textContent=e; if(e) return;
+  code='RS-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+String(Date.now()).slice(-4);
+  $('tName').textContent=n; $('tPpl').textContent=val.ppl==='2'?'2 (s doprovodem)':'1'; $('tCode').textContent=code;
+  const q=qrcode(0,'M'); q.addData(`KODIAQRS-LAUNCH|${code}|${n}|${val.ppl}`); q.make();
+  const c=$('qr'), g=c.getContext('2d'), k=q.getModuleCount(), cell=c.width/k; g.fillStyle='#fff'; g.fillRect(0,0,c.width,c.width); g.fillStyle='#04122b';
+  for(let r=0;r<k;r++)for(let s=0;s<k;s++) if(q.isDark(r,s)) g.fillRect(Math.floor(s*cell),Math.floor(r*cell),Math.ceil(cell),Math.ceil(cell));
+  $('form').hidden=true; $('done').hidden=false;
+  gsap.fromTo('#ticket',{clipPath:'inset(0 0 100% 0)',y:-20},{clipPath:'inset(0 0 0% 0)',y:0,duration:1.6,ease:'power2.out'});
+  ScrollTrigger.refresh();
+};
+$('ics').onclick=()=>{
+  const f=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kodiaq RS Launch Night//CZ','BEGIN:VEVENT','UID:'+code+'@kodiaq-rs-launch',
+    'DTSTAMP:'+f(new Date()),'DTSTART:'+f(EVENT),'DTEND:'+f(new Date(EVENT.getTime()+5*36e5)),
+    'SUMMARY:Kodiaq RS Launch Night','LOCATION:Hala Holešovice, Praha 7','DESCRIPTION:Vstupenka '+code,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='kodiaq-rs-launch-night.ics'; a.click();
+};
+$('save').onclick=()=>{
+  const c=document.createElement('canvas'); c.width=900; c.height=1300; const g=c.getContext('2d');
+  const gr=g.createLinearGradient(0,0,900,1300); gr.addColorStop(0,'#0f1d38'); gr.addColorStop(1,'#060a14'); g.fillStyle=gr; g.fillRect(0,0,900,1300);
+  g.fillStyle='#6ab8ff'; g.font='600 26px Segoe UI, Arial'; g.fillText('VSTUPENKA',60,90);
+  g.fillStyle='#eef3fb'; g.font='800 60px Segoe UI, Arial'; g.fillText('Kodiaq RS',60,170); g.fillText('Launch Night',60,240);
+  g.font='400 36px Segoe UI, Arial'; g.fillText($('tName').textContent,60,320);
+  g.fillStyle='#98a3b8'; g.font='400 30px Segoe UI, Arial'; g.fillText('Čt 4. 12. 2026 · 18:00 · Hala Holešovice, Praha 7',60,380);
+  g.fillText('Osoby: '+$('tPpl').textContent,60,430);
+  g.drawImage($('qr'),210,520,480,480);
+  g.fillStyle='#6ab8ff'; g.font='600 40px Consolas, monospace'; g.textAlign='center'; g.fillText(code,450,1080);
+  g.fillStyle='#98a3b8'; g.font='400 24px Segoe UI, Arial'; g.fillText('Koncept · neoficiální ukázka',450,1240);
+  const a=document.createElement('a'); a.href=c.toDataURL('image/png'); a.download='vstupenka-kodiaq-rs.png'; a.click();
+};
+addEventListener('load',()=>ScrollTrigger.refresh());
+/* ---------- tajný host: stírací los ---------- */
+(()=>{
+  const box=$('los'), c=$('losCv'), g=c.getContext('2d'); let W,H,done=false,last=null,cnt=0;
+  function paint(){
+    const r=c.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); W=c.width=r.width*d; H=c.height=r.height*d;
+    g.globalCompositeOperation='source-over';
+    const gr=g.createLinearGradient(0,0,W,H); gr.addColorStop(0,'#141b2b'); gr.addColorStop(.5,'#1b2438'); gr.addColorStop(1,'#10151f');
+    g.fillStyle=gr; g.fillRect(0,0,W,H);
+    const sh=g.createLinearGradient(0,0,W,H*.6); sh.addColorStop(.3,'rgba(255,255,255,0)'); sh.addColorStop(.5,'rgba(255,255,255,.06)'); sh.addColorStop(.7,'rgba(255,255,255,0)');
+    g.fillStyle=sh; g.fillRect(0,0,W,H);
+    for(let i=0;i<W*H/90;i++){ g.fillStyle=`rgba(255,255,255,${Math.random()*.07})`; g.fillRect(Math.random()*W,Math.random()*H,d,d); }
+    g.fillStyle='rgba(255,255,255,.55)'; g.textAlign='center'; g.font=`500 ${10*d}px Segoe UI,Arial`;
+    g.fillText('S E T Ř E T E   P R S T E M',W/2,H/2+4*d);
+    g.strokeStyle='rgba(106,184,255,.5)'; g.lineWidth=d; g.beginPath(); g.moveTo(W/2-18*d,H/2-12*d); g.lineTo(W/2+18*d,H/2-12*d); g.stroke();
+  }
+  paint(); addEventListener('resize',()=>{ if(!done) paint(); });
+  const pos=e=>{const r=c.getBoundingClientRect(),d=W/r.width; return [(e.clientX-r.left)*d,(e.clientY-r.top)*d];};
+  function scratch(p){
+    g.globalCompositeOperation='destination-out'; g.strokeStyle='#000'; g.globalAlpha=1; g.lineCap='round'; g.lineJoin='round'; g.lineWidth=W*.17;
+    g.beginPath(); g.moveTo(...(last||p)); g.lineTo(...p); g.stroke(); last=p;
+    if(++cnt%8===0) check();
+  }
+  function check(){
+    const a=g.getImageData(0,0,W,H).data; let t=0,n=0; for(let i=3;i<a.length;i+=64){n++; if(a[i]<40)t++;}
+    if(t/n>.4 && !done){ done=true; box.classList.add('done'); $('losHint').textContent='Uvidíme se ve 21:00';
+      if(navigator.vibrate) navigator.vibrate([20,40,20]); }
+  }
+  c.addEventListener('pointerdown',e=>{ c.setPointerCapture(e.pointerId); last=null; scratch(pos(e)); });
+  c.addEventListener('pointermove',e=>{ if(e.buttons||e.pointerType==='touch') { if(c.hasPointerCapture(e.pointerId)) scratch(pos(e)); } });
+  c.addEventListener('pointerup',()=>{ last=null; check(); });
+})();
+
+})();
+</script>
+</body>
+</html>
