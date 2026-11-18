@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Montessori IRIS Trutnov</title>
+<meta name="description" content="Montessori škola při ZŠ Trutnov, Náchodská 18. Děti rostou vlastním tempem – samostatnost, spolupráce, zodpovědnost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1f3a68; --navy-2:#2d4f86; --cream:#f8f3ea; --paper:#fffdf8;
+  --sage:#8fa58a; --sage-l:#dfe8da; --wood:#c89b6d; --wood-l:#f1e2cf;
+  --pink:#e8b4b0; --ink:#2a2f3a; --muted:#6b7280;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;color:var(--navy);line-height:1.15;font-weight:600}
+h2{font-size:clamp(1.9rem,4.5vw,3rem);margin-bottom:.6em}
+h3{font-size:1.25rem}
+p{max-width:62ch}
+a{color:var(--navy)}
+.wrap{width:min(1120px,90vw);margin:0 auto;position:relative;z-index:2}
+section{padding:clamp(70px,11vw,140px) 0;position:relative}
+.eyebrow{display:inline-block;font-weight:700;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.8em}
+.lead{font-size:1.15rem;color:#444b58}
+.btn{display:inline-flex;align-items:center;gap:.5em;padding:.95em 1.6em;border-radius:999px;background:var(--navy);color:#fff;text-decoration:none;font-weight:700;border:0;cursor:pointer;font-size:1rem;transition:transform .25s,background .25s}
+.btn:hover{transform:translateY(-2px);background:var(--navy-2)}
+.btn.ghost{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 2px var(--navy)}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s}
+nav.solid{background:rgba(248,243,234,.92);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(31,58,104,.08)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:.6em;font-family:Fraunces,serif;font-weight:600;color:var(--navy);text-decoration:none;font-size:1.1rem}
+.brand svg{width:38px;height:38px}
+.menu{display:flex;gap:1.6em;list-style:none}
+.menu a{text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85}
+.menu a:hover{opacity:1}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;width:24px;height:2px;background:var(--navy);margin:5px auto;transition:.3s}
+@media(max-width:860px){
+  .menu{position:fixed;inset:70px 0 auto 0;flex-direction:column;background:var(--cream);padding:1.5em 5vw 2em;gap:1.1em;transform:translateY(-130%);transition:transform .35s;box-shadow:0 20px 40px rgba(0,0,0,.08)}
+  .menu.open{transform:none}
+  .burger{display:block}
+}
+
+/* PATH that runs through the page */
+#trail{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:1}
+#trail path{fill:none;stroke:var(--navy);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:2 9;opacity:.28}
+#trail .walker{fill:var(--wood)}
+
+/* HERO */
+.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding-top:90px;background:
+  radial-gradient(ellipse at 50% 35%,#fff 0,rgba(255,255,255,0) 60%),var(--cream)}
+.emblem{display:block;overflow:visible;width:min(300px,62vw);margin:0 auto 1.6em}
+.emblem .draw{fill:none;stroke:var(--navy);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 2.4s ease forwards}
+.emblem .fill{fill:var(--navy);opacity:0;animation:fade 1s 1.6s forwards}
+.emblem .leaf{fill:var(--navy);opacity:0;animation:leaf .5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@keyframes leaf{to{opacity:.9}}
+.hero h1{font-size:clamp(2.4rem,7vw,4.6rem);margin-bottom:.25em}
+.quote{font-family:Fraunces,serif;font-style:italic;font-size:clamp(1.15rem,2.6vw,1.6rem);color:var(--navy-2);margin:0 auto 2em;max-width:30ch}
+.quote small{display:block;font-style:normal;font-family:Nunito;font-size:.85rem;color:var(--muted);margin-top:.5em}
+.hero .actions{display:flex;gap:1em;justify-content:center;flex-wrap:wrap}
+.scrollhint{margin-top:3.5em;font-size:.8rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.scrollhint i{display:block;width:2px;height:40px;background:linear-gradient(var(--navy),transparent);margin:.8em auto 0;animation:hint 1.8s infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4em;align-items:center}
+.values{display:grid;gap:1.1em}
+.value{display:flex;gap:1.1em;align-items:flex-start;background:var(--paper);padding:1.4em;border-radius:var(--r);box-shadow:0 10px 30px rgba(31,58,104,.06)}
+.value svg{flex:none;width:54px;height:54px}
+.value p{font-size:.97rem;color:#4b5260}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr;gap:2.5em}}
+
+/* DAY */
+.day{background:var(--paper)}
+.timeline{display:grid;grid-template-columns:240px 1fr;gap:3em;margin-top:2.5em}
+.times{list-style:none;display:flex;flex-direction:column;gap:.4em;border-left:2px dashed rgba(31,58,104,.2);padding-left:1.2em}
+.times button{all:unset;cursor:pointer;display:block;padding:.75em 1em;border-radius:14px;font-weight:600;position:relative;transition:background .25s}
+.times button b{display:block;font-size:.8rem;color:var(--sage);letter-spacing:.06em}
+.times button::before{content:"";position:absolute;left:calc(-1.2em - 7px);top:50%;width:12px;height:12px;border-radius:50%;background:var(--cream);border:2px solid var(--navy);transform:translateY(-50%);transition:.25s}
+.times button.on{background:var(--sage-l)}
+.times button.on::before{background:var(--navy)}
+.panel{background:var(--cream);border-radius:28px;padding:2.2em;display:grid;grid-template-columns:1fr 1.1fr;gap:2em;align-items:center;min-height:340px}
+.panel .art{aspect-ratio:1;border-radius:22px;display:grid;place-items:center;transition:background .5s}
+.panel .art svg{width:70%;height:70%}
+.panel h3{font-size:1.7rem;margin-bottom:.4em}
+.panel .tag{display:inline-block;margin-top:1em;font-size:.82rem;font-weight:700;color:var(--navy);background:var(--wood-l);padding:.35em .8em;border-radius:99px}
+.fadein{animation:fi .5s ease}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}}
+.note{font-size:.82rem;color:var(--muted);margin-top:1.2em}
+@media(max-width:860px){
+  .timeline{grid-template-columns:1fr;gap:1.5em}
+  .times{flex-direction:row;overflow-x:auto;border-left:0;padding:0 0 .6em;scroll-snap-type:x mandatory}
+  .times li{flex:none;scroll-snap-align:start}
+  .times button::before{display:none}
+  .panel{grid-template-columns:1fr;padding:1.5em}
+  .panel .art{aspect-ratio:16/10}
+}
+
+/* MATERIALS */
+.mats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4em;margin-top:2.5em}
+.mat{perspective:1200px;height:330px;cursor:pointer}
+.mat-in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.mat.flip .mat-in,.myth.flip .mat-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:1.6em;display:flex;flex-direction:column}
+.front{background:var(--paper);box-shadow:0 10px 30px rgba(31,58,104,.07);justify-content:space-between}
+.front svg{width:100%;height:180px}
+.front .hint{font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.back{background:var(--navy);color:#e9eef7;transform:rotateY(180deg);justify-content:center}
+.back h3{color:#fff;margin-bottom:.6em}
+.back ul{list-style:none;display:grid;gap:.45em;font-size:.95rem}
+.back li::before{content:"✦ ";color:var(--wood)}
+.back .age{margin-top:1.1em;font-size:.8rem;opacity:.7}
+@media(max-width:900px){.mats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.mats{grid-template-columns:1fr}.mat{height:300px}}
+
+/* ENVIRONMENT */
+.env{background:var(--sage-l)}
+.env-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:1em;margin-top:2.5em}
+.room{border-radius:var(--r);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:1.2em;color:#fff}
+.room::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(20,35,60,.65))}
+.room div{position:relative;z-index:2}
+.room h3{color:#fff;font-size:1.1rem}
+.room p{font-size:.88rem;opacity:.92;max-height:0;overflow:hidden;transition:max-height .5s}
+.room:hover p,.room.open p{max-height:120px}
+.room .ph{position:absolute;inset:0}
+.room.big{grid-column:span 2;grid-row:span 2}
+.room.wide{grid-column:span 2}
+.ph-label{position:absolute;top:12px;right:12px;z-index:3;font-size:.7rem;background:rgba(255,255,255,.85);color:var(--navy);padding:.25em .6em;border-radius:99px;font-weight:700}
+@media(max-width:860px){.env-grid{grid-template-columns:1fr 1fr;grid-auto-rows:170px}.room.big{grid-column:span 2;grid-row:span 1}}
+
+/* PARENTS / FAQ */
+.parents-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:4em}
+.steps{list-style:none;counter-reset:s;display:grid;gap:1em;margin-top:1.5em}
+.steps li{counter-increment:s;display:flex;gap:1em;align-items:flex-start}
+.steps li::before{content:counter(s);flex:none;width:36px;height:36px;border-radius:50%;background:var(--wood);color:#fff;font-weight:700;display:grid;place-items:center}
+details{background:var(--paper);border-radius:18px;padding:1.2em 1.4em;margin-bottom:.8em;box-shadow:0 6px 20px rgba(31,58,104,.05)}
+summary{cursor:pointer;font-weight:700;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:1em}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.4rem;line-height:1;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:.8em;color:#4b5260}
+@media(max-width:860px){.parents-grid{grid-template-columns:1fr;gap:2.5em}}
+
+/* TEAM */
+.team{background:var(--paper)}
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6em;margin-top:2.5em}
+.person{text-align:center}
+.avatar{width:150px;height:150px;border-radius:50%;margin:0 auto 1em;display:grid;place-items:center;background:var(--wood-l)}
+.avatar svg{width:60%;height:60%}
+.person small{color:var(--sage);font-weight:700;letter-spacing:.05em}
+.person p{font-size:.95rem;color:#4b5260;margin:.5em auto 0;max-width:28ch;font-style:italic}
+@media(max-width:700px){.people{grid-template-columns:1fr}}
+
+/* NEWS */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4em;margin:2.5em 0 2em}
+.post{background:var(--paper);border-radius:var(--r);overflow:hidden;box-shadow:0 10px 30px rgba(31,58,104,.06)}
+.post .ph{height:160px}
+.post div.t{padding:1.2em 1.4em 1.5em}
+.post time{font-size:.8rem;color:var(--sage);font-weight:700}
+@media(max-width:860px){.news{grid-template-columns:1fr}}
+
+/* CONTACT */
+.contact{background:var(--navy);color:#e6ecf6}
+.contact h2,.contact h3{color:#fff}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:4em}
+.info{display:grid;gap:1.4em;margin-top:1.5em}
+.info a{color:#fff}
+.info b{display:block;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wood)}
+form{background:var(--paper);color:var(--ink);border-radius:28px;padding:2em;display:grid;gap:1em}
+label{font-weight:700;font-size:.88rem;color:var(--navy);display:grid;gap:.35em}
+input,select,textarea{font:inherit;padding:.85em 1em;border:1.5px solid #d9d3c7;border-radius:14px;background:#fff;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1em}
+.ok{display:none;background:var(--sage-l);padding:1em;border-radius:14px;font-weight:600}
+@media(max-width:860px){.contact-grid{grid-template-columns:1fr;gap:2.5em}.row2{grid-template-columns:1fr}}
+footer{background:#172c50;color:#9fb0cc;text-align:center;padding:2em 0;font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.emblem .draw{stroke-dashoffset:0}.emblem .fill,.emblem .leaf{opacity:1}}
+
+/* v2 additions */
+.classes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4em;margin-top:2.5em}
+.cls{background:var(--paper);border-radius:var(--r);padding:1.8em;box-shadow:0 10px 30px rgba(31,58,104,.06);position:relative;overflow:hidden}
+.cls .big{font-family:Fraunces,serif;font-size:3.4rem;color:var(--navy);line-height:1}
+.cls .age{display:inline-block;margin:.6em 0 .8em;font-weight:700;font-size:.85rem;background:var(--sage-l);color:var(--navy);padding:.3em .8em;border-radius:99px}
+.cls p{color:#4b5260;font-size:.97rem}
+.chips{display:flex;flex-wrap:wrap;gap:.45em;margin-top:1em}
+.chip{font-size:.78rem;font-weight:700;padding:.35em .75em;border-radius:99px;background:var(--wood-l);color:#6b4a2a}
+.cls::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:var(--sage-l);opacity:.6}
+@media(max-width:860px){.classes{grid-template-columns:1fr}}
+.together{background:var(--wood-l)}
+.tg-grid{display:grid;grid-template-columns:1fr 1fr;gap:3em;align-items:center}
+.tg-art{aspect-ratio:4/3;border-radius:28px;background:linear-gradient(135deg,#e9cfae,#f8efe2);display:grid;place-items:center;position:relative}
+.tg-art svg{width:78%}
+@media(max-width:860px){.tg-grid{grid-template-columns:1fr}}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4em;margin-top:2.5em}
+.proj{border-radius:var(--r);padding:1.6em;color:#fff;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:transform .35s}
+.proj:hover{transform:translateY(-6px)}
+.proj h3{color:#fff;font-size:1.3rem;margin-bottom:.3em}
+.proj p{font-size:.92rem;opacity:.92}
+.proj .ico{position:absolute;top:1.2em;right:1.2em;width:64px;height:64px;opacity:.9}
+.proj.wide{grid-column:span 2}
+@media(max-width:860px){.projects{grid-template-columns:1fr}.proj.wide{grid-column:auto}}
+.outside{display:flex;gap:1em;overflow-x:auto;padding:.5em 0 1em;margin-top:2em;scroll-snap-type:x mandatory}
+.place{flex:none;width:250px;background:var(--paper);border-radius:var(--r);padding:1.4em;scroll-snap-align:start;box-shadow:0 8px 24px rgba(31,58,104,.06)}
+.place b{display:block;font-family:Fraunces,serif;color:var(--navy);font-size:1.15rem;margin-bottom:.3em}
+.place span{font-size:.9rem;color:#4b5260}
+.place i{font-style:normal;font-size:1.8rem;display:block;margin-bottom:.4em}
+.myths{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4em;margin-top:2.5em}
+.myth{perspective:1200px;height:420px;cursor:pointer}
+.myth .face{padding:1.8em}
+.myth .front{background:#fbeee6;justify-content:flex-start}
+.myth .back{background:#e8efe3;color:var(--ink);justify-content:flex-start}
+.myth .lbl{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.1em;padding:.35em .9em;border-radius:99px;color:#fff;margin-bottom:1em;align-self:flex-start}
+.myth .num{font-family:Fraunces,serif;font-size:.95rem;color:var(--muted);margin-bottom:.6em}
+.myth .q{font-family:Fraunces,serif;font-size:1.35rem;color:#9a4a35;line-height:1.3}
+.myth .back h3{color:#3f5f3a;margin-bottom:.6em;font-size:1.15rem}
+.myth .back ul{list-style:none;display:grid;gap:.4em;font-size:.93rem}
+.myth .back li::before{content:"✓ ";color:#5f8a57;font-weight:700}
+.myth .back .sum{margin-top:auto;font-style:italic;font-size:.9rem;color:#3f5f3a}
+.myth .flipnote{margin-top:auto;font-size:.8rem;color:var(--muted)}
+.myth.soon{cursor:default}
+.myth.soon .front{background:var(--paper);border:2px dashed #d9d3c7;align-items:center;justify-content:center;text-align:center;color:var(--muted)}
+@media(max-width:860px){.myths{grid-template-columns:1fr}.myth{height:400px}}
+.filters{display:flex;gap:.5em;flex-wrap:wrap;margin-top:1.5em}
+.filters button{all:unset;cursor:pointer;padding:.5em 1.1em;border-radius:99px;font-weight:700;font-size:.9rem;box-shadow:inset 0 0 0 2px var(--navy);color:var(--navy)}
+.filters button.on{background:var(--navy);color:#fff}
+.chron{display:grid;gap:1.6em;margin-top:2em}
+.story{display:grid;grid-template-columns:300px 1fr;gap:2em;background:var(--paper);border-radius:28px;padding:1.6em;box-shadow:0 10px 30px rgba(31,58,104,.06)}
+.story .ph{border-radius:20px;min-height:220px}
+.story time{font-size:.82rem;color:var(--sage);font-weight:700}
+.story h3{font-size:1.5rem;margin:.2em 0 .5em}
+.story p{color:#4b5260;font-size:.97rem}
+.story .more{display:none}
+.story.open .more{display:block}
+.story .acts{display:flex;gap:1em;flex-wrap:wrap;margin-top:1.2em;align-items:center}
+.linkbtn{all:unset;cursor:pointer;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:860px){.story{grid-template-columns:1fr}.story .ph{min-height:170px}}
+.zs{font-size:.8rem;font-weight:700;padding:.5em 1em;border-radius:99px;background:var(--navy);color:#fff!important;opacity:1!important}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Montessori IRIS Trutnov">
+      <svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="140" fill="none" stroke="#1f3a68" stroke-width="14"/><circle cx="118" cy="98" r="20" fill="#1f3a68"/><path d="M100 125h36l4 50 18 6-4 8-22-6-4 72h-14l-4-62-4 62H92l-2-78z" fill="#1f3a68"/><circle cx="196" cy="140" r="15" fill="#1f3a68"/><path d="M182 160h28l3 40 0 52h-11l-3-40-3 40h-11l-1-52-10 2-2-8z" fill="#1f3a68"/></svg>
+      IRIS Trutnov
+    </a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="#o-nas">O nás</a></li>
+      <li><a href="#tridy">Třídy</a></li>
+      <li><a href="#den">Náš den</a></li>
+      <li><a href="#projekty">Projekty</a></li>
+      <li><a href="#myty">Mýty</a></li>
+      <li><a href="#kronika">Kronika</a></li>
+      <li><a href="#rodice">Pro rodiče</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a class="zs" href="#" title="Doplnit adresu webu ZŠ">Web ZŠ Náchodská ↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top" style="position:relative">
+<svg id="trail" aria-hidden="true"><path id="trailPath"/><circle class="walker" id="walker" r="7"/></svg>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="emblem" viewBox="0 0 300 300" aria-hidden="true">
+      <circle class="draw" cx="150" cy="150" r="118" style="--len:742"/>
+      <g id="leaves"></g>
+      <circle class="fill" cx="122" cy="96" r="17"/>
+      <path class="fill" d="M106 119h32l3 44 16 8 14 2-2 8-18-2-12-4-3 72h-12l-3-56-3 56h-12l-2-70z"/>
+      <circle class="fill" cx="190" cy="140" r="13"/>
+      <path class="fill" d="M177 157h26l2 36v44h-10l-2-34-3 34h-10l-1-46-5 3-6-4z"/>
+      <path class="draw" d="M90 240c40-10 70-6 90-14s20-18 40-22 20-2 26 0" style="--len:200;stroke-width:1.6;stroke-dasharray:4 5"/>
+    </svg>
+    <span class="eyebrow">Montessori program při ZŠ Trutnov, Náchodská 18</span>
+    <h1>Montessori IRIS Trutnov</h1>
+    <p class="quote">Každý svým tempem. Žádný sprint na známky, ale vlastní cesta za poznáním.</p>
+    <div class="actions">
+      <a class="btn" href="#kontakt">Přijďte se podívat</a>
+      <a class="btn ghost" href="#den">Jak to u nás vypadá</a>
+    </div>
+    <div class="scrollhint">Vydejte se s námi po cestě<i></i></div>
+  </div>
+</header>
+
+<section id="o-nas">
+  <div class="wrap about-grid">
+    <div class="rv">
+      <span class="eyebrow">O nás</span>
+      <h2>Děti tu rostou vlastním tempem</h2>
+      <p class="lead">Jsme Montessori škola při Základní škole Trutnov, Náchodská 18. Pracujeme v připraveném prostředí s respektem k Montessori principům a především k přirozenému vývoji.</p>
+      <p style="margin-top:1em;color:#4b5260">Děti se nesrovnávají mezi sebou. Každé si s průvodcem plánuje vlastní práci, učí se ji dotáhnout a samo zhodnotit. Plníme stejný vzdělávací program jako ostatní třídy ZŠ, jen jinou cestou.</p>
+    </div>
+    <div class="values">
+      <div class="value rv"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="#dfe8da"/><path d="M30 44V24m0 0c-6 0-10-4-10-10 6 0 10 4 10 10zm0 6c5 0 9-3 9-9-5 0-9 3-9 9z" fill="none" stroke="#1f3a68" stroke-width="2.5" stroke-linecap="round"/></svg><div><h3>Samostatnost</h3><p>Vlastní plán práce, vlastní tempo a odpovědnost za výsledek.</p></div></div>
+      <div class="value rv"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="#f1e2cf"/><circle cx="22" cy="24" r="5" fill="#1f3a68"/><circle cx="38" cy="24" r="5" fill="#1f3a68"/><path d="M14 42c0-6 4-10 8-10s6 2 8 4c2-2 4-4 8-4s8 4 8 10" fill="none" stroke="#1f3a68" stroke-width="2.5" stroke-linecap="round"/></svg><div><h3>Spolupráce</h3><p>Věkově smíšené třídy. Starší pomáhají mladším a sami se tím učí.</p></div></div>
+      <div class="value rv"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="#f6dcd9"/><path d="M30 44s-12-7-12-16a7 7 0 0 1 12-4 7 7 0 0 1 12 4c0 9-12 16-12 16z" fill="none" stroke="#1f3a68" stroke-width="2.5" stroke-linejoin="round"/></svg><div><h3>Zodpovědnost</h3><p>Za sebe, za třídu i za společné projekty, od nápadu po realizaci.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="tridy" class="day">
+  <div class="wrap">
+    <div class="rv">
+      <span class="eyebrow">Naše třídy</span>
+      <h2>Tři třídy, jedna cesta</h2>
+      <p class="lead">Ve třídách se potkávají děti různého věku. Věkové rozpětí 1.S a 2.S doplní škola.</p>
+    </div>
+    <div class="classes">
+      <div class="cls rv"><div class="big">1.S</div><span class="age">věk doplní škola</span><p>Začátek cesty: čtení, psaní a počty přes ruce a konkrétní pomůcky.</p><div class="chips"><span class="chip">pomůcky</span><span class="chip">čtení</span><span class="chip">kruh</span></div></div>
+      <div class="cls rv"><div class="big">2.S</div><span class="age">věk doplní škola</span><p>Víc samostatné práce, vlastní plány a první větší projekty.</p><div class="chips"><span class="chip">projekty</span><span class="chip">kosmická výchova</span><span class="chip">prezentace</span></div></div>
+      <div class="cls rv"><div class="big">3.S</div><span class="age">11–15 let</span><p>Dospívání, výběr střední školy, celotýdny a projekty od nápadu po realizaci.</p><div class="chips"><span class="chip">celotýdny</span><span class="chip">3D tisk</span><span class="chip">výběr SŠ</span><span class="chip">duševní zdraví</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="together">
+  <div class="wrap tg-grid">
+    <div class="tg-art rv">
+      <svg viewBox="0 0 400 300"><rect x="40" y="230" width="320" height="10" rx="5" fill="#c89b6d" opacity=".5"/>
+        <circle cx="150" cy="120" r="24" fill="#1f3a68"/><path d="M120 150h60l6 80h-72z" fill="#1f3a68"/>
+        <rect x="160" y="175" width="60" height="40" rx="4" fill="#fff" stroke="#c89b6d" stroke-width="3" transform="rotate(-8 190 195)"/>
+        <circle cx="250" cy="160" r="16" fill="#2d4f86"/><path d="M230 182h40l4 48h-48z" fill="#2d4f86"/>
+        <circle cx="300" cy="168" r="14" fill="#8fa58a"/><path d="M283 188h34l3 42h-40z" fill="#8fa58a"/>
+        <path d="M80 70q10-20 20 0M95 55q10-20 20 0" stroke="#c89b6d" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <text x="320" y="90" font-size="40" fill="#c89b6d">♪</text><text x="280" y="70" font-size="28" fill="#8fa58a">♫</text></svg>
+      <span class="ph-label">Místo pro fotku</span>
+    </div>
+    <div class="rv">
+      <span class="eyebrow">Starší a mladší spolu</span>
+      <h2>Učíme se i jeden od druhého</h2>
+      <p class="lead">Starší čtou mladším, mladší se učí od starších. A když se k tomu přidá klavírní doprovod jedné z našich hudebně nadaných slečen, dostane společný zpěv úplně jiné rozměry.</p>
+      <p style="margin-top:1em;color:#4b5260">I takové chvíle nám zpestřují školní dny a přinášejí spoustu radosti.</p>
+    </div>
+  </div>
+</section>
+
+<section id="den" class="day">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Náš den</span><h2>Jak to u nás funguje</h2><p class="lead">Klikněte na jednotlivé části dne.</p></div>
+    <div class="timeline rv"><ul class="times" id="times"></ul><div class="panel" id="panel"></div></div>
+    <p class="note">Časy jsou orientační, přesný rozvrh doplní škola.</p>
+  </div>
+</section>
+
+<section id="projekty">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Celotýdny a projekty</span><h2>Proč si něco jen představovat?</h2><p class="lead">Během celotýdnů se na celý týden ponoříme do jednoho projektu, zkoušíme nové věci a trávíme spolu ještě víc času.</p></div>
+    <div class="projects">
+      <div class="proj wide rv" style="background:linear-gradient(135deg,#1f3a68,#4a6aa0)"><svg class="ico" viewBox="0 0 64 64"><path d="M22 10l10 6 10-6 12 8-6 10-4-2v28H20V26l-4 2-6-10z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg><h3>Módní přehlídka</h3><p>Návrhářky, modelky, moderátorky a celý organizační tým. Od nápadu přes organizaci až po realizaci.</p></div>
+      <div class="proj rv" style="background:linear-gradient(135deg,#8fa58a,#5f7d5a)"><svg class="ico" viewBox="0 0 64 64"><path d="M12 14h40v8H12zM20 22l4 8h16l4-8M28 30v6h8v-6M18 50h28l-4-14H22z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg><h3>Grafika a 3D tisk</h3><p>Navrhnout v grafickém programu a rovnou vytisknout.</p></div>
+      <div class="proj rv" style="background:linear-gradient(135deg,#c89b6d,#9e7146)"><svg class="ico" viewBox="0 0 64 64"><path d="M32 8l6 14 15 1-11 10 4 15-14-8-14 8 4-15-11-10 15-1z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg><h3>Noční výsadek a Oscaři</h3><p>Dobrodružství i galavečer s předáváním cen.</p></div>
+      <div class="proj rv" style="background:linear-gradient(135deg,#d98a7e,#b9665a)"><svg class="ico" viewBox="0 0 64 64"><circle cx="32" cy="30" r="16" fill="none" stroke="#fff" stroke-width="3"/><circle cx="26" cy="28" r="3" fill="#fff"/><circle cx="38" cy="28" r="3" fill="#fff"/><path d="M26 38h12M24 46l8 10 8-10" stroke="#fff" stroke-width="3" fill="none"/></svg><h3>Día de Muertos</h3><p>Jak se slaví v Mexiku, a proč.</p></div>
+      <div class="proj rv" style="background:linear-gradient(135deg,#2d4f86,#1f3a68)"><svg class="ico" viewBox="0 0 64 64"><path d="M10 50l14-24 10 14 8-10 12 20z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="46" cy="18" r="5" fill="#fff"/></svg><h3>Adapťák</h3><p>Začátek roku na novém místě a přivítání šesťáků v našem kruhu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="env">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Učíme se i mimo školu</span><h2>Třída nekončí dveřmi</h2><p class="lead">Ve škole se taky učíme, a jak! Historie Trutnova, houby, španělská města, procenta, logická olympiáda, reportáž… A část učení probíhá venku.</p></div>
+    <div class="outside rv">
+      <div class="place"><i>🗣️</i><b>Den jazyků</b><span>Na gymnáziu (klasice) mezi jazyky a kulturami.</span></div>
+      <div class="place"><i>🎓</i><b>Uffo</b><span>Výběr střední školy na veletrhu škol.</span></div>
+      <div class="place"><i>🎬</i><b>Kino</b><span>Přednáška, která nás přenesla do Japonska.</span></div>
+      <div class="place"><i>🧠</i><b>Dušedílna</b><span>Lektoři nám pomohli nahlédnout do světa duševního zdraví.</span></div>
+      <div class="place"><i>🎨</i><b>Galerie EPO</b><span>Jak pracovat s emocemi při tvorbě umění.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="myty">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Montessori mýty</span><h2>Mýtus, nebo skutečnost?</h2><p class="lead">O Montessori koluje spousta představ. Klepněte na kartu a podívejte se, jak to je doopravdy.</p></div>
+    <div class="myths">
+      <div class="myth soon rv"><div class="mat-in"><div class="face front"><div class="num">Mýtus #01</div><p>Doplníme z Facebooku</p></div></div></div>
+      <div class="myth soon rv"><div class="mat-in"><div class="face front"><div class="num">Mýtus #02</div><p>Doplníme z Facebooku</p></div></div></div>
+      <div class="myth rv" id="m3" tabindex="0" role="button"><div class="mat-in">
+        <div class="face front"><span class="lbl" style="background:#e07a5f">MÝTUS</span><div class="num">Mýtus #03</div><p class="q">„Učitel v Montessori jen přihlíží a děti si všechno dělají samy.“</p><div class="flipnote">Klepněte pro skutečnost ↻</div></div>
+        <div class="face back"><span class="lbl" style="background:#5f8a57">SKUTEČNOST</span><h3>Učitel v Montessori má velmi důležitou roli.</h3><ul><li>Připravuje prostředí a vybírá vhodné činnosti.</li><li>Pozoruje děti a vnímá jejich potřeby.</li><li>Představuje nové pomůcky a dovednosti.</li><li>Provází děti učením a podporuje je.</li><li>Pomáhá, když je potřeba.</li></ul><p class="sum">Svoboda ≠ bez dozoru. Dítě dostává správnou podporu ve správný čas.</p></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="kronika" class="day">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Kronika</span><h2>Co se u nás děje</h2></div>
+    <div class="filters rv" id="filters"><button class="on" data-f="vse">Vše</button><button data-f="1s">1.S</button><button data-f="2s">2.S</button><button data-f="3s">3.S</button><button data-f="druzina">Družina</button></div>
+    <div class="chron" id="chron">
+      <article class="story rv" data-c="3s">
+        <div class="ph" style="background:linear-gradient(135deg,#1f3a68,#8fa58a)"></div>
+        <div><time>Září a říjen · 3.S</time><h3>Září a říjen ve třídě 3.S 🎬</h3>
+          <p>Kdyby vám bylo 11–15 let a chodili byste do naší 3.S, možná byste si po prvních dvou měsících říkali, jestli jste se náhodou neupsali do nějaké dost nabité reality show.</p>
+          <div class="more"><p style="margin-top:.8em">Nové prostory, přivítání šesťáků v našem kruhu, adapťák na novém místě, noční výsadek a galavečer s předáváním Oscarů. Stihli jsme Den jazyků, výběr střední školy v Uffu, přednášku o Japonsku, Dušedílnu i galerii EPO. A teď celotýden s módní přehlídkou, grafikou a 3D tiskem.</p><p style="margin-top:.8em"><b>A to jsme teprve na začátku!</b></p></div>
+          <div class="chips"><span class="chip">Adapťák</span><span class="chip">Noční výsadek</span><span class="chip">Oscaři</span><span class="chip">Den jazyků</span><span class="chip">Uffo</span><span class="chip">Dušedílna</span><span class="chip">Galerie EPO</span><span class="chip">Módní přehlídka</span><span class="chip">3D tisk</span></div>
+          <div class="acts"><button class="linkbtn more-btn">Číst dál</button><a class="linkbtn" href="https://www.facebook.com/search/top?q=Montessori%20IRIS%20Trutnov" target="_blank" rel="noopener">Celý příspěvek na FB ↗</a></div>
+        </div>
+      </article>
+      <article class="story rv" data-c="druzina">
+        <div class="ph" style="background:linear-gradient(135deg,#c89b6d,#2a2f3a)"></div>
+        <div><time>8. 11. · Družina</time><h3>Strašidelná družina 🎃</h3>
+          <p>Naše úžasná školní družina se na chvíli proměnila v pořádně strašidelné místo.</p>
+          <div class="acts"><a class="linkbtn" href="https://www.facebook.com/search/top?q=Montessori%20IRIS%20Trutnov" target="_blank" rel="noopener">Celý příspěvek na FB ↗</a></div>
+        </div>
+      </article>
+      <article class="story rv" data-c="vse-only">
+        <div class="ph" style="background:linear-gradient(135deg,#e8b4b0,#dfe8da)"></div>
+        <div><time>listopad · napříč třídami</time><h3>Starší čtou mladším</h3>
+          <p>Společné čtení a zpěv s klavírním doprovodem. I takové chvíle nám zpestřují školní dny.</p>
+          <div class="acts"><a class="linkbtn" href="https://www.facebook.com/search/top?q=Montessori%20IRIS%20Trutnov" target="_blank" rel="noopener">Celý příspěvek na FB ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="rodice">
+  <div class="wrap parents-grid">
+    <div class="rv">
+      <span class="eyebrow">Pro rodiče</span><h2>Jak se k nám dostat</h2>
+      <p class="lead">Nejlepší je přijít a zažít třídu na vlastní oči.</p>
+      <ol class="steps">
+        <li><div><b>Den otevřených dveří</b><br><span style="color:#4b5260">Prohlídka tříd a rozhovor s průvodci. <em>Termín doplní škola.</em></span></div></li>
+        <li><div><b>Ukázková hodina</b><br><span style="color:#4b5260">Dítě si vyzkouší, jak se u nás pracuje.</span></div></li>
+        <li><div><b>Zápis nebo přestup</b><br><span style="color:#4b5260">Probíhá přes ZŠ Trutnov, Náchodská 18.</span></div></li>
+      </ol>
+      <a class="btn" href="#kontakt" style="margin-top:2em">Domluvit návštěvu</a>
+    </div>
+    <div class="rv">
+      <details open><summary>Jak se hodnotí bez známek?</summary><p>Děti dostávají slovní hodnocení a učí se samy poznat, co už umí a na čem chtějí pracovat. Žádný sprint na známky. <em>(Upřesní škola.)</em></p></details>
+      <details><summary>Zvládnou pak přijímačky a střední školu?</summary><p>Výběr střední školy je u starších dětí součástí roku, třeba návštěvou veletrhu Uffo. Na přijímačky se připravujeme. <em>(Upřesní škola.)</em></p></details>
+      <details><summary>Neučí se děti jen to, co je baví?</summary><p>Děti si vybírají z připravené nabídky a s průvodcem plánují práci tak, aby pokryly celý vzdělávací program. Svoboda neznamená bez dozoru.</p></details>
+      <details><summary>Jakou roli má učitel?</summary><p>Připravuje prostředí, pozoruje, představuje nové věci, provází a pomáhá, když je potřeba. Víc v našem Mýtu #03.</p></details>
+      <details><summary>Lze přestoupit i do vyššího ročníku?</summary><p>Ano, domluvte se s námi. Doporučujeme nejdřív přijít na návštěvu. <em>(Upřesní škola.)</em></p></details>
+    </div>
+  </div>
+</section>
+
+<section id="tym" class="team">
+  <div class="wrap">
+    <div class="rv" style="text-align:center"><span class="eyebrow">Tým</span><h2>Průvodci, ne vykladači</h2><p class="lead" style="margin:0 auto">Lidé, kteří vašim dětem ukazují cestu.</p></div>
+    <div class="people">
+      <div class="person rv"><div class="avatar"><svg viewBox="0 0 60 60"><circle cx="30" cy="22" r="11" fill="#1f3a68"/><path d="M10 56c0-12 9-20 20-20s20 8 20 20z" fill="#1f3a68"/></svg></div><h3>Jméno průvodce</h3><small>1.S</small><p>Krátká věta o sobě, doplní škola.</p></div>
+      <div class="person rv"><div class="avatar" style="background:#dfe8da"><svg viewBox="0 0 60 60"><circle cx="30" cy="22" r="11" fill="#1f3a68"/><path d="M10 56c0-12 9-20 20-20s20 8 20 20z" fill="#1f3a68"/></svg></div><h3>Jméno průvodce</h3><small>2.S</small><p>Krátká věta o sobě, doplní škola.</p></div>
+      <div class="person rv"><div class="avatar" style="background:#f6dcd9"><svg viewBox="0 0 60 60"><circle cx="30" cy="22" r="11" fill="#1f3a68"/><path d="M10 56c0-12 9-20 20-20s20 8 20 20z" fill="#1f3a68"/></svg></div><h3>Jméno průvodce</h3><small>3.S</small><p>Krátká věta o sobě, doplní škola.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="contact">
+  <div class="wrap contact-grid">
+    <div class="rv">
+      <span class="eyebrow" style="color:var(--wood)">Kontakt</span><h2>Přijďte se podívat</h2>
+      <p style="opacity:.85">Rádi vám ukážeme třídy a odpovíme na všechny otázky.</p>
+      <div class="info">
+        <div><b>Adresa</b>Náchodská 18, 541 03 Trutnov<br><a href="https://www.google.com/maps/search/?api=1&query=N%C3%A1chodsk%C3%A1+18+Trutnov" target="_blank" rel="noopener">Otevřít v mapě →</a></div>
+        <div><b>E-mail</b><a href="mailto:montessorizsnachodska@gmail.com">montessorizsnachodska@gmail.com</a></div>
+        <div><b>Messenger</b>Montessori IRIS Trutnov</div>
+        <div><b>Škola</b>ZŠ Trutnov, Náchodská 18 · <a href="#">web školy ↗</a></div>
+      </div>
+    </div>
+    <form id="form" class="rv">
+      <h3 style="color:var(--navy)">Chci se přijít podívat</h3>
+      <div class="row2"><label>Jméno rodiče<input required name="jmeno"></label><label>E-mail<input required type="email" name="email"></label></div>
+      <div class="row2"><label>Ročník dítěte<select name="rocnik"><option>Předškolák / 1. ročník</option><option>2. ročník</option><option>3. ročník</option><option>4. ročník</option><option>5. ročník</option><option>6. ročník</option><option>7. ročník</option><option>8. ročník</option><option>9. ročník</option></select></label><label>Telefon<input name="tel" type="tel"></label></div>
+      <label>Zpráva<textarea rows="3" name="zprava" placeholder="Co vás zajímá?"></textarea></label>
+      <button class="btn" type="submit">Odeslat</button>
+      <div class="ok" id="ok">Děkujeme! V ukázce se zpráva neodesílá. Na ostrém webu půjde na e-mail školy.</div>
+    </form>
+  </div>
+</section>
+</main>
+<footer>© 2026 Montessori IRIS Trutnov · Montessori program při ZŠ Trutnov, Náchodská 18 · <a href="https://www.facebook.com/search/top?q=Montessori%20IRIS%20Trutnov" style="color:#c9d4e8" target="_blank" rel="noopener">Facebook</a> · <a href="#" style="color:#c9d4e8">Web ZŠ</a></footer>
+<script>
+/* ---- emblem laurel leaves ---- */
+(function(){
+  const g=document.getElementById('leaves');let html='',i=0;
+  [1,-1].forEach(side=>{
+    for(let k=0;k<10;k++){
+      const deg=105+k*12, th=(side>0?deg:180-deg)*Math.PI/180;
+      const x=150+Math.cos(th)*134, y=150+Math.sin(th)*134;
+      const rot=(side>0?deg:180-deg)+90+(side>0?-35:35);
+      html+=`<ellipse class="leaf" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="12" ry="5" transform="rotate(${rot.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" style="animation-delay:${(1.2+k*.08).toFixed(2)}s"/>`;
+    }
+  });
+  g.innerHTML=html;
+})();
+
+/* ---- nav ---- */
+const nav=document.getElementById('nav'),menu=document.getElementById('menu');
+document.getElementById('burger').onclick=()=>menu.classList.toggle('open');
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+
+/* ---- reveal ---- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ---- trail path through page ---- */
+const trail=document.getElementById('trail'),tp=document.getElementById('trailPath'),walker=document.getElementById('walker');
+let tlen=0;
+function buildTrail(){
+  const main=document.getElementById('top');const W=main.offsetWidth,H=main.offsetHeight;
+  trail.setAttribute('width',W);trail.setAttribute('height',H);trail.style.height=H+'px';
+  const secs=[...main.querySelectorAll('header,section')];
+  const m=W<700?18:Math.max(30,(W-1120)/2-10);
+  let d=`M${W/2} ${innerHeight*.82}`;let side=0;
+  secs.slice(1).forEach(s=>{
+    const y=s.offsetTop+40, x=side?W-m:m;
+    const prevY=parseFloat(d.split(' ').pop());
+    const cy=(prevY+y)/2;
+    d+=` C${side?W*.25:W*.75} ${cy}, ${x} ${y-120}, ${x} ${y}`;
+    d+=` L${x} ${y+s.offsetHeight-140}`;
+    side=1-side;
+  });
+  tp.setAttribute('d',d);tlen=tp.getTotalLength();onScroll();
+}
+function onScroll(){
+  nav.classList.toggle('solid',scrollY>40);
+  if(!tlen)return;
+  const max=document.documentElement.scrollHeight-innerHeight;
+  const p=Math.min(1,Math.max(0,scrollY/max));
+  const pt=tp.getPointAtLength(p*tlen);
+  walker.setAttribute('cx',pt.x);walker.setAttribute('cy',pt.y);
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(buildTrail,200)});
+addEventListener('load',buildTrail);setTimeout(buildTrail,600);
+
+/* ---- day timeline ---- */
+const day=[
+ {t:'8:00',n:'Ranní kruh',h:'Začínáme v kruhu',p:'Pozdravíme se, řekneme si, jak se kdo má a co nás čeká. Učíme se naslouchat a mluvit před ostatními.',tag:'Komunikace a sounáležitost',c:'#f1e2cf',i:'circle'},
+ {t:'8:30',n:'Práce podle plánu',h:'Vlastní plán práce',p:'Každý pracuje na svém týdenním plánu: matematika, jazyky, projekty. Sám, ve dvojici nebo ve skupině. Průvodce dává lekce a konzultuje.',tag:'Samostatnost a soustředění',c:'#dfe8da',i:'work'},
+ {t:'10:00',n:'Svačina',h:'Pauza, když je potřeba',p:'Svačina a chvíle oddechu. Přestávky si děti v rámci bloku řídí do velké míry samy.',tag:'Zodpovědnost',c:'#f6dcd9',i:'cup'},
+ {t:'11:00',n:'Venku a mimo školu',h:'Učení v terénu',p:'Pobyt venku, exkurze, galerie, kino nebo přednášky. Historie Trutnova se nejlíp učí přímo v Trutnově.',tag:'Propojení se světem',c:'#d7e3f3',i:'tree'},
+ {t:'12:30',n:'Projekty',h:'Projekty a skupinové lekce',p:'Práce napříč předměty: od reportáže přes španělská města po 3D tisk.',tag:'Spolupráce a tvoření',c:'#f1e2cf',i:'globe'},
+ {t:'14:00',n:'Reflexe',h:'Co se mi dnes povedlo',p:'Den uzavíráme ohlédnutím. Děti zhodnotí, co zvládly, a naplánují další krok.',tag:'Sebehodnocení',c:'#dfe8da',i:'star'}
+];
+const icons={
+ circle:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#1f3a68" stroke-width="3" stroke-dasharray="4 6"/>'+[0,1,2,3,4,5].map(k=>{const a=k*Math.PI/3;return `<circle cx="${50+Math.cos(a)*30}" cy="${50+Math.sin(a)*30}" r="8" fill="#1f3a68"/>`}).join('')+'</svg>',
+ work:'<svg viewBox="0 0 100 100"><rect x="15" y="62" width="70" height="8" rx="3" fill="#c89b6d"/>'+[0,1,2,3,4].map(k=>`<rect x="${42-k*3}" y="${54-k*9}" width="${16+k*6}" height="8" rx="1" fill="#e8b4b0" opacity="${1-k*.1}"/>`).reverse().join('')+'</svg>',
+ cup:'<svg viewBox="0 0 100 100"><path d="M28 40h38v22a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="#1f3a68"/><path d="M66 46h6a8 8 0 0 1 0 16h-6" fill="none" stroke="#1f3a68" stroke-width="4"/><path d="M40 30c0-6 6-6 6-12M52 30c0-6 6-6 6-12" stroke="#c89b6d" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
+ tree:'<svg viewBox="0 0 100 100"><rect x="46" y="55" width="8" height="25" fill="#c89b6d"/><circle cx="50" cy="42" r="22" fill="#8fa58a"/><circle cx="36" cy="52" r="14" fill="#8fa58a"/><circle cx="64" cy="52" r="14" fill="#8fa58a"/></svg>',
+ globe:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="28" fill="#2d4f86"/><path d="M34 40c8-4 10 4 18 2s6-10 14-6M30 58c10 2 12-6 20-2s10 8 18 4" stroke="#8fa58a" stroke-width="6" fill="none" stroke-linecap="round"/></svg>',
+ star:'<svg viewBox="0 0 100 100"><path d="M50 20l9 19 21 3-15 15 4 21-19-10-19 10 4-21-15-15 21-3z" fill="#c89b6d"/></svg>'
+};
+const times=document.getElementById('times'),panel=document.getElementById('panel');
+function showDay(i){
+  const d=day[i];
+  times.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  panel.innerHTML=`<div class="art fadein" style="background:${d.c}">${icons[d.i]}</div><div class="fadein"><span class="eyebrow">${d.t}</span><h3>${d.h}</h3><p>${d.p}</p><span class="tag">${d.tag}</span></div>`;
+}
+times.innerHTML=day.map((d,i)=>`<li><button data-i="${i}"><b>${d.t}</b>${d.n}</button></li>`).join('');
+times.querySelectorAll('button').forEach(b=>b.onclick=()=>showDay(+b.dataset.i));
+showDay(1);
+
+/* ---- myth flip ---- */
+const m3=document.getElementById('m3');m3.onclick=()=>m3.classList.toggle('flip');m3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();m3.classList.toggle('flip')}};
+/* ---- chronicle ---- */
+document.querySelectorAll('.more-btn').forEach(b=>b.onclick=()=>{const s=b.closest('.story');s.classList.toggle('open');b.textContent=s.classList.contains('open')?'Méně':'Číst dál'});
+document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.story').forEach(s=>{s.style.display=(f==='vse'||s.dataset.c===f)?'':'none'});setTimeout(buildTrail,50)});
+/* rooms tap on mobile */
+
+/* form */
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('ok').style.display='block';e.target.querySelector('button').disabled=true});
+</script>
+</body>
+</html>
