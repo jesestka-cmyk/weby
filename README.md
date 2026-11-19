@@ -14,3 +14,4 @@ Sbírka webů. Každý web má vlastní složku a vlastní Vercel projekt (Root 
 | `kodiaq-launch-night/` | KODIAQ RS Launch Night — scroll pozvánka na akci (neoficiální koncept); červená opona → modrý Kodiaq RS, prolnutí do interiéru, program, tajný host se stíracím losem, raut, mapa, RSVP s QR vstupenkou a .ics |
 | `montessori-iris/` | Montessori IRIS Trutnov — návrh webu Montessori programu při ZŠ Náchodská 18 (třídy, náš den, celotýdny, mýty, kronika, pro rodiče, kontakt) |
 | `montessori-iris-prezentace/` | Montessori IRIS Trutnov — interaktivní prezentace pro město a kraj (10 slidů, rozpočtová kalkulačka, financování) |
+| `monumenty/` | Světelné monumenty 2026 — katalog ilustro (34 konceptů, rejstřík s filtry, lightbox), úvodní intro se světelným prstencem a cinknutím |
