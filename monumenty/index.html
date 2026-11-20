@@ -210,6 +210,53 @@ body.dt-on{overflow:hidden}
 
 .bar.solid{mix-blend-mode:normal;background:rgba(7,8,10,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:16px;padding-bottom:16px}
 .bar{transition:background .4s,padding .4s}
+
+/* nový úvod */
+.mb{display:none}@media (max-width:640px){.mb{display:inline}}
+#princip{padding-bottom:clamp(60px,10vh,120px)}
+.pr{max-width:1100px;margin:0 auto;text-align:center}
+.pr h2{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.4vw,104px);line-height:.95;margin:18px 0 30px}
+.pr h2 em{color:var(--gold);text-shadow:0 0 40px var(--glow)}
+.pr .lead{font-size:clamp(17px,1.4vw,21px);line-height:1.65;color:#cfcac0;max-width:62ch;margin:0 auto}
+.ticker{margin:clamp(50px,8vh,90px) calc(-1*clamp(20px,4vw,56px));overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.tk{display:flex;width:max-content;animation:tk 38s linear infinite}
+.tk span{font-family:var(--serif);font-style:italic;font-size:clamp(28px,3.4vw,52px);padding:0 .8em;color:#e9e3d6;white-space:nowrap}
+.tk span::after{content:"✦";font-style:normal;font-size:.35em;color:var(--gold);margin-left:1.6em;vertical-align:middle}
+@keyframes tk{to{transform:translateX(-50%)}}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,48px);max-width:1500px;margin:0 auto;counter-reset:s}
+.steps li{position:relative;padding-top:26px;border-top:1px solid var(--line)}
+.steps li::before{content:"";position:absolute;top:-1px;left:0;width:0;height:1px;background:var(--gold);box-shadow:0 0 12px var(--glow);transition:width 1.4s cubic-bezier(.7,0,.2,1) .3s}
+.steps li.in::before{width:100%}
+.steps span{font-size:11px;letter-spacing:.28em;color:var(--gold)}
+.steps h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,2.6vw,42px);margin:10px 0 10px}
+.steps p{font-size:14px;line-height:1.6;color:var(--mute);max-width:30ch}
+@media (max-width:900px){.steps{grid-template-columns:1fr;gap:30px}.pr{text-align:left}}
+@media (prefers-reduced-motion:reduce){.tk{animation:none}}
+
+/* střídané přechody při scrollu */
+.card.rv{opacity:0;transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1.3s ease}
+.card.fx0{transform:translateX(-110px)}
+.card.fx1{filter:blur(22px);transform:scale(.94)}
+.card.fx2{transform:translateY(120px)}
+.card.fx3{transform:translateX(110px) rotate(1.5deg)}
+.card.rv.in{opacity:1;transform:none;filter:none}
+.card.rv .ph img{transform:scale(1.18);transition:transform 1.8s cubic-bezier(.2,.7,.2,1),filter .6s}
+.card.rv.in .ph img{transform:scale(1)}
+.card.rv.in:hover .ph img{transform:scale(1.05)}
+.card .cap>*{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease}
+.card.in .cap>*{opacity:1;transform:none}
+.card.in .cap>*:nth-child(2){transition-delay:.15s}.card.in .cap>*:nth-child(3){transition-delay:.25s}
+.card.in .cap>*:nth-child(4){transition-delay:.35s}.card.in .cap>*:nth-child(5){transition-delay:.45s}.card.in .cap>*:nth-child(6){transition-delay:.55s}
+@media (prefers-reduced-motion:reduce){.card.rv,.card .cap>*{opacity:1!important;transform:none!important;filter:none!important}}
+
+/* zvětšení fotky */
+.dt-frame{cursor:zoom-in;position:relative}
+.dt-frame::after{content:"⤢  Zvětšit";position:absolute;right:12px;bottom:12px;font:500 10px var(--sans);letter-spacing:.22em;text-transform:uppercase;background:rgba(7,8,10,.6);backdrop-filter:blur(6px);padding:8px 12px;border-radius:99px;color:var(--ink);pointer-events:none}
+.zm{position:fixed;inset:0;z-index:150;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;overflow:auto;touch-action:pinch-zoom}
+.zm.on{opacity:1;pointer-events:auto}
+.zm img{max-width:100vw;max-height:100svh;object-fit:contain;cursor:zoom-out}
+.zm button{position:fixed;top:16px;right:16px;background:rgba(7,8,10,.6);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:10px 16px;font:500 11px var(--sans);letter-spacing:.2em;cursor:pointer}
+
 /* intro */
 #intro{position:fixed;inset:0;z-index:200;background:#000;transition:opacity .9s ease}
 #intro canvas{position:absolute;inset:0;width:100%;height:100%}
@@ -248,18 +295,21 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
 </section>
 
 <section id="princip">
-  <div class="intro">
-    <h2 class="rv">Světlo, které<br>z místa udělá <em>adresu.</em></h2>
-    <div>
-      <p class="lead rv d1">Monument je první věc, kterou si člověk z prostoru zapamatuje. Navrhujeme a stavíme velké světelné objekty na míru. Vznikají z kombinace 3D tisku, poctivých materiálů a chytré řízené LED techniky, která vydrží české počasí.</p>
-      <div class="pillars rv d2">
-        <div class="pillar"><span>01 — Jádro</span><h3>3D tištěný korpus</h3><p>Lehký a přesný tvar s dutinou pro světlo. Libovolná geometrie bez drahých forem.</p></div>
-        <div class="pillar"><span>02 — Plášť</span><h3>Chrom, dřevo, dibond</h3><p>Leštěný plech, frézované dřevo, ocel nebo mléčné plexi podle charakteru místa.</p></div>
-        <div class="pillar"><span>03 — Světlo</span><h3>Chytré LED</h3><p>Venkovní pásky s vysokým krytím IP, scény, přechody a reakce na pohyb.</p></div>
-        <div class="pillar"><span>04 — Hlas</span><h3>Objekt, který mluví</h3><p>Volitelně reproduktor, mikrofon a AI hlas. Monument pozdraví a provede.</p></div>
-      </div>
-    </div>
+  <div class="pr">
+    <div class="eyebrow rv">Na míru</div>
+    <h2 class="rv d1">Světlo, které patří<br>jen <em>vašemu místu.</em></h2>
+    <p class="lead rv d2">Každý projekt začíná prázdným papírem. Poznáme místo, lidi a příběh, který má prostor vyprávět. Pak kreslíme, vizualizujeme a hledáme materiály, které mu sluší. Nic není dané předem, každý monument vzniká jako originál.</p>
   </div>
+  <div class="ticker rv" aria-hidden="true"><div class="tk">
+    <span>kov</span><span>chrom</span><span>dřevo</span><span>sklo</span><span>kámen</span><span>beton</span><span>plexi</span><span>3D tisk</span><span>světlo</span>
+    <span>kov</span><span>chrom</span><span>dřevo</span><span>sklo</span><span>kámen</span><span>beton</span><span>plexi</span><span>3D tisk</span><span>světlo</span>
+  </div></div>
+  <ol class="steps">
+    <li class="rv"><span>01</span><h3>Místo</h3><p>Architektura, světlo, pohyb lidí a ambice investora.</p></li>
+    <li class="rv d1"><span>02</span><h3>Vize</h3><p>Skici, vizualizace do fotek místa a prezentace pro všechny, kdo rozhodují.</p></li>
+    <li class="rv d2"><span>03</span><h3>Výroba</h3><p>Vlastní dílna v Praze, materiály bez šablony, montáž na místě.</p></li>
+    <li class="rv d3"><span>04</span><h3>Světlo</h3><p>Chytré LED, scény, senzory a volitelně hlas. Péče i po otevření.</p></li>
+  </ol>
 </section>
 
 <section id="galerie" style="padding-top:0">
@@ -273,7 +323,7 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
 
 <section class="close" id="kontakt">
   <div class="eyebrow rv">Pojďme postavit ten váš</div>
-  <h2 class="rv d1">Každý monument<br>je <em>originál.</em></h2>
+  <h2 class="rv d1">Vaše místo.<br class="mb"> Váš příběh.<br><em>Vaše světlo.</em></h2>
   <div class="contact rv d2">
     <span class="n">Jaroslav Klimeš</span>
     <span>Jednatel, ilustro</span>
@@ -285,6 +335,7 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
 
 <footer><span>ilustro · ilustra studio s.r.o.</span><span>Vizualizace jsou koncepční. Rozměry jsou orientační a upřesňují se podle místa.</span><span>ilustro.cz</span></footer>
 
+<div class="zm" id="zm"><img id="zmImg" alt=""><button id="zmX">ZAVŘÍT ✕</button></div>
 <div class="dt" id="dt" aria-hidden="true" role="dialog">
   <div class="dt-top"><span class="dt-count" id="dtCount"></span><button class="dt-x" id="dtX" aria-label="Zavřít">Zavřít ✕</button></div>
   <div class="dt-img"><div class="dt-frame"><img id="dtImg" alt=""></div><div class="dt-alt" id="dtAlt"></div></div>
@@ -349,7 +400,7 @@ const F=document.getElementById("filters");let visible=M.map((_,i)=>i);
 // mozaika
 const G=document.getElementById("grid");
 M.forEach((m,i)=>{
-  const c=document.createElement("a");c.className="card rv "+SIZE[i%SIZE.length];c.href="#"+m.id;
+  const c=document.createElement("a");c.className="card rv fx"+(i%4);c.style.transitionDelay=(i%3)*0.12+"s";c.href="#"+m.id;
   c.innerHTML=`<div class="ph"><img loading="lazy" src="img/t/${pad(m.img[0])}.webp" alt="${m.n}"></div>
     <span class="num">№ ${m.no}</span><span class="open">↗</span>
     <div class="cap"><span class="cat2">${CATS[m.c]}</span><b>${m.n}</b><span class="tg">${m.t}</span><span class="ds">${m.d}</span><div class="mt"><span>${m.s[1]}</span><span>${m.s[0]}</span></div><span class="more">Detail a parametry →</span></div>`;
@@ -395,9 +446,15 @@ function go(d){const j=step(d);DT.classList.add("swap");setTimeout(()=>{fill(j);
 document.getElementById("dtX").onclick=closeDT;
 document.getElementById("dtP").onclick=()=>go(-1);
 document.getElementById("dtN").onclick=()=>go(1);
-addEventListener("keydown",e=>{if(!DT.classList.contains("on"))return;if(e.key==="Escape")closeDT();if(e.key==="ArrowLeft")go(-1);if(e.key==="ArrowRight")go(1);});
+addEventListener("keydown",e=>{if(ZM.classList.contains("on")){if(e.key==="Escape")closeZM();return;}if(!DT.classList.contains("on"))return;if(e.key==="Escape")closeDT();if(e.key==="ArrowLeft")go(-1);if(e.key==="ArrowRight")go(1);});
 let tx=null,ty=null;DT.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
 DT.addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);tx=null;});
+
+// zvětšení fotky v detailu
+const ZM=document.getElementById("zm"),ZI=document.getElementById("zmImg");
+const closeZM=()=>ZM.classList.remove("on");
+document.querySelector(".dt-frame").addEventListener("click",()=>{ZI.src=DI.src;ZI.alt=DI.alt;ZM.classList.add("on");});
+ZM.addEventListener("click",e=>{if(e.target===ZI||e.target===ZM||e.target.id==="zmX")closeZM();});
 const fromHash=()=>{const h=location.hash.slice(1);const i=M.findIndex(m=>m.id===h);if(i>=0){openDT(i,false);return true;}return false;};
 const deepLink=fromHash();
 
