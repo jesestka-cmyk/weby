@@ -128,6 +128,67 @@ footer{display:flex;justify-content:space-between;padding:26px clamp(20px,4vw,56
   .scroll-hint{display:none}
   .m-img .alt img{width:110px;height:62px}
 }
+
+/* mozaika */
+#galerie{scroll-margin-top:70px}
+.index-head h2 .cnt{font-style:italic;color:var(--gold);font-size:.45em;vertical-align:super;margin-left:.15em}
+.grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(200px,17vw,300px);grid-auto-flow:dense;gap:14px}
+.card{display:block;position:relative;overflow:hidden;background:var(--bg2);border-radius:2px}
+.card.big{grid-column:span 2;grid-row:span 2}
+.card.wide{grid-column:span 2}
+.card .ph{position:absolute;inset:0;aspect-ratio:auto}
+.card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(5,6,8,.85) 100%);transition:opacity .5s}
+.card .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;border:0;display:block;z-index:2}
+.card .cap .no{position:absolute;top:-1000px}
+.card .num{position:absolute;top:16px;left:18px;z-index:2;font-size:11px;letter-spacing:.24em;color:rgba(243,239,230,.75)}
+.card .cat2{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
+.card .cap b{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2vw,34px);line-height:1;display:block}
+.card.big .cap b{font-size:clamp(34px,3.4vw,58px)}
+.card .tg{display:block;font-family:var(--serif);font-style:italic;font-size:16px;color:#d9d3c6;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s ease,opacity .5s ease,margin .5s;margin-top:0}
+.card:hover .tg,.card:focus-visible .tg{max-height:60px;opacity:1;margin-top:8px}
+.card .open{position:absolute;top:14px;right:16px;z-index:2;width:34px;height:34px;border:1px solid rgba(243,239,230,.35);border-radius:50%;display:grid;place-items:center;font-size:16px;opacity:0;transform:scale(.8);transition:.4s}
+.card:hover .open{opacity:1;transform:none}
+.card:hover img{transform:scale(1.05);filter:brightness(1.05)}
+
+/* detail */
+body.dt-on{overflow:hidden}
+.dt{position:fixed;inset:0;z-index:120;background:rgba(5,6,8,.97);backdrop-filter:blur(8px);display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(24px,4vw,70px);align-items:center;padding:80px clamp(70px,6vw,110px) 50px;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.dt.on{opacity:1;pointer-events:auto}
+.dt-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,56px)}
+.dt-count{font-size:12px;letter-spacing:.28em;color:var(--mute)}
+.dt-count b{color:var(--gold);font-weight:500}
+.dt-x{background:none;border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:10px 18px;font:500 11px var(--sans);letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:.3s}
+.dt-x:hover{border-color:var(--ink)}
+.dt-frame{aspect-ratio:16/9;overflow:hidden;background:var(--bg2)}
+.dt-frame img{width:100%;height:100%;object-fit:cover;transition:opacity .35s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.dt.swap .dt-frame img{opacity:0;transform:scale(1.03)}
+.dt-alt{display:flex;gap:10px;margin-top:12px}
+.dt-alt img{width:120px;aspect-ratio:16/9;object-fit:cover;opacity:.5;cursor:pointer;transition:opacity .3s;border:1px solid transparent}
+.dt-alt img.on,.dt-alt img:hover{opacity:1;border-color:var(--gold)}
+.dt-txt{transition:opacity .35s ease,transform .35s ease;max-height:calc(100svh - 140px);overflow:auto}
+.dt.swap .dt-txt{opacity:0;transform:translateY(12px)}
+.dt-txt .cat{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.dt-txt h3{font-family:var(--serif);font-weight:400;font-size:clamp(46px,5vw,86px);line-height:.92;margin:14px 0 16px}
+.dt-txt .tag{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.6vw,24px);color:#d9d3c6;margin-bottom:18px;line-height:1.3}
+.dt-txt p.d{font-size:15px;line-height:1.7;color:var(--mute);margin-bottom:26px}
+.dt-txt .btn{margin-top:28px}
+.dt-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:rgba(7,8,10,.6);color:var(--ink);font:300 26px var(--sans);cursor:pointer;transition:.3s;display:grid;place-items:center}
+.dt-nav:hover{border-color:var(--gold);color:var(--gold)}
+.dt-p{left:clamp(10px,1.5vw,30px)}.dt-n{right:clamp(10px,1.5vw,30px)}
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:44vw;gap:10px}
+  .card.wide{grid-column:span 2}
+  .card .cap{padding:12px 14px}.card .cap b{font-size:20px}.card.big .cap b{font-size:30px}
+  .card .tg,.card .open{display:none}
+  .filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:6px;scrollbar-width:none}
+  .filters button{flex:0 0 auto}
+  .dt{grid-template-columns:1fr;align-content:start;overflow:auto;padding:70px 18px 90px;gap:20px}
+  .dt-txt{max-height:none;overflow:visible}
+  .dt-nav{top:auto;bottom:18px;transform:none;position:fixed}
+  .dt-p{left:18px}.dt-n{right:18px}
+  .dt-alt img{width:90px}
+}
+
 /* intro */
 #intro{position:fixed;inset:0;z-index:200;background:#000;transition:opacity .9s ease}
 #intro canvas{position:absolute;inset:0;width:100%;height:100%}
@@ -148,7 +209,7 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
 
 <header class="bar">
   <a href="#top" class="wordmark">ilustro</a>
-  <nav><a href="#princip">Princip</a><a href="#rejstrik">Rejstřík</a><a href="#kontakt">Kontakt</a></nav>
+  <nav><a href="#princip">Princip</a><a href="#galerie">Galerie</a><a href="#kontakt">Kontakt</a></nav>
 </header>
 
 <section class="cover" id="top" style="padding:0">
@@ -180,15 +241,14 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
   </div>
 </section>
 
-<section id="rejstrik" style="padding-top:0">
+<section id="galerie" style="padding-top:0">
   <div class="index-head">
-    <h2 class="rv">Rejstřík</h2>
+    <h2 class="rv">Galerie <em class="cnt">34</em></h2>
     <div class="filters rv d1" id="filters"></div>
   </div>
   <div class="grid" id="grid"></div>
 </section>
 
-<main id="spreads"></main>
 
 <section class="close" id="kontakt">
   <div class="eyebrow rv">Pojďme postavit ten váš</div>
@@ -204,12 +264,12 @@ body.intro-on .cover-in,body.intro-on .bar{opacity:0}
 
 <footer><span>ilustro · ilustra studio s.r.o.</span><span>Vizualizace jsou koncepční. Rozměry jsou orientační a upřesňují se podle místa.</span><span>ilustro.cz</span></footer>
 
-<div class="lb" id="lb">
-  <button class="x" aria-label="Zavřít">✕</button>
-  <button class="p" aria-label="Předchozí">‹</button>
-  <img alt="">
-  <button class="nx" aria-label="Další">›</button>
-  <div class="lbcap"></div>
+<div class="dt" id="dt" aria-hidden="true" role="dialog">
+  <div class="dt-top"><span class="dt-count" id="dtCount"></span><button class="dt-x" id="dtX" aria-label="Zavřít">Zavřít ✕</button></div>
+  <div class="dt-img"><div class="dt-frame"><img id="dtImg" alt=""></div><div class="dt-alt" id="dtAlt"></div></div>
+  <div class="dt-txt" id="dtTxt"></div>
+  <button class="dt-nav dt-p" id="dtP" aria-label="Předchozí">‹</button>
+  <button class="dt-nav dt-n" id="dtN" aria-label="Další">›</button>
 </div>
 
 <script>
@@ -251,73 +311,81 @@ const M=[
  {img:[35],n:"Pavilon",c:"bra",t:"Světelný dům uprostřed náměstí.",d:"Lamelová kostka, do které se dá vstoupit. Jako vánoční pavilon, informační bod nebo zastřešení pro akce.",s:["Historické náměstí, akce","3 × 3 × 4 m","Bílé lamely, ocelová konstrukce","Teplá LED, scény pro akce"]}
 ];
 const pad=n=>String(n).padStart(2,"0");
-const flat=[]; // for lightbox
-M.forEach((m,i)=>{m.no=pad(i+1);m.img.forEach(k=>flat.push({src:`img/${pad(k)}.webp`,n:m.n,no:m.no}));});
+const slug=t=>t.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+M.forEach((m,i)=>{m.no=pad(i+1);m.id=slug(m.n);});
+const SIZE=["big","","","wide","","","","big","","wide","",""]; // rytmus mozaiky
 
-// filters
-const F=document.getElementById("filters");
+// filtry
+const F=document.getElementById("filters");let visible=M.map((_,i)=>i);
 [["all","Vše"],...Object.entries(CATS)].forEach(([k,v],i)=>{
-  const b=document.createElement("button");b.textContent=v;b.dataset.k=k;if(!i)b.className="on";
+  const b=document.createElement("button");b.textContent=v;if(!i)b.className="on";
   b.onclick=()=>{F.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
-    document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hide",k!=="all"&&c.dataset.c!==k));};
+    visible=[];document.querySelectorAll(".card").forEach((c,j)=>{const show=k==="all"||M[j].c===k;c.classList.toggle("hide",!show);if(show)visible.push(j);});};
   F.appendChild(b);
 });
 
-// grid + spreads
-const G=document.getElementById("grid"),S=document.getElementById("spreads");
+// mozaika
+const G=document.getElementById("grid");
 M.forEach((m,i)=>{
-  const c=document.createElement("a");c.className="card rv";c.dataset.c=m.c;c.href="#m"+m.no;
-  c.innerHTML=`<div class="ph"><img loading="lazy" src="img/t/${pad(m.img[0])}.webp" alt="${m.n}"></div><div class="cap"><b>${m.n}</b><i>№ ${m.no}</i></div>`;
+  const c=document.createElement("a");c.className="card rv "+SIZE[i%SIZE.length];c.href="#"+m.id;
+  c.innerHTML=`<div class="ph"><img loading="lazy" src="img/${SIZE[i%SIZE.length]==="big"?"":"t/"}${pad(m.img[0])}.webp" alt="${m.n}"></div>
+    <span class="num">№ ${m.no}</span><span class="open">↗</span>
+    <div class="cap"><span class="cat2">${CATS[m.c]}</span><b>${m.n}</b><span class="tg">${m.t}</span></div>`;
+  c.onclick=e=>{e.preventDefault();openDT(i);};
   G.appendChild(c);
-
-  const s=document.createElement("article");s.className="m"+(i%2?" flip":"");s.id="m"+m.no;
-  const alts=m.img.length>1?`<div class="alt">${m.img.map(k=>`<img loading="lazy" src="img/t/${pad(k)}.webp" data-src="img/${pad(k)}.webp" alt="">`).join("")}</div>`:"";
-  s.innerHTML=`<div class="m-num">${m.no}</div>
-   <div class="m-img rv"><div class="frame"><img class="main" loading="lazy" src="img/${pad(m.img[0])}.webp" alt="${m.n}" data-par="0.12"></div>${alts}</div>
-   <div class="m-txt">
-     <div class="cat rv">№ ${m.no} · ${CATS[m.c]}</div>
-     <h3 class="rv d1">${m.n}</h3>
-     <div class="tag rv d1">${m.t}</div>
-     <p class="d rv d2">${m.d}</p>
-     <dl class="spec rv d3"><dt>Umístění</dt><dd>${m.s[0]}</dd><dt>Rozměr</dt><dd>${m.s[1]} <span style="color:var(--mute)">(orientačně)</span></dd><dt>Materiál</dt><dd>${m.s[2]}</dd><dt>Světlo</dt><dd>${m.s[3]}</dd></dl>
-   </div>`;
-  S.appendChild(s);
-  const main=s.querySelector(".main");
-  s.querySelector(".frame").onclick=()=>openLB(flat.findIndex(f=>f.src===main.getAttribute("src")));
-  s.querySelectorAll(".alt img").forEach(a=>a.onclick=()=>{main.src=a.dataset.src;});
 });
 
 // reveal
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.15,rootMargin:"0px 0px -5% 0px"});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12,rootMargin:"0px 0px -5% 0px"});
 document.querySelectorAll(".rv:not(.in)").forEach(el=>io.observe(el));
 
-// parallax + progress
+// paralaxa obálky + progress
 const P=document.getElementById("prog");let tick=false;
 function frame(){
   const h=innerHeight;
-  document.querySelectorAll("[data-par]").forEach(el=>{
-    const r=el.parentElement.getBoundingClientRect();if(r.bottom<0||r.top>h)return;
-    const k=+el.dataset.par,off=(r.top+r.height/2-h/2)*-k;el.style.setProperty("--py",(off-r.height*.08)+"px");
-  });
+  document.querySelectorAll("[data-par]").forEach(el=>{const r=el.parentElement.getBoundingClientRect();if(r.bottom<0||r.top>h)return;
+    el.style.setProperty("--py",((r.top+r.height/2-h/2)*-(+el.dataset.par)-r.height*.08)+"px");});
   P.style.width=(scrollY/(document.body.scrollHeight-h)*100)+"%";tick=false;
 }
 addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(frame);}},{passive:true});frame();
 
-// lightbox
-const LB=document.getElementById("lb"),LI=LB.querySelector("img"),LC=LB.querySelector(".lbcap");let cur=0;
-function show(i){cur=(i+flat.length)%flat.length;const f=flat[cur];LI.src=f.src;LC.innerHTML=`<small>№ ${f.no}</small>${f.n}`;}
-function openLB(i){show(i);LB.classList.add("on");}
-LB.querySelector(".x").onclick=()=>LB.classList.remove("on");
-LB.querySelector(".p").onclick=()=>show(cur-1);
-LB.querySelector(".nx").onclick=()=>show(cur+1);
-LB.onclick=e=>{if(e.target===LB)LB.classList.remove("on");};
+// detail
+const DT=document.getElementById("dt"),DI=document.getElementById("dtImg"),DA=document.getElementById("dtAlt"),DX=document.getElementById("dtTxt"),DC=document.getElementById("dtCount");
+let cur=-1;
+function fill(i){
+  const m=M[i];cur=i;
+  DI.src=`img/${pad(m.img[0])}.webp`;DI.alt=m.n;
+  DA.innerHTML=m.img.length>1?m.img.map((k,j)=>`<img src="img/t/${pad(k)}.webp" data-k="${pad(k)}" class="${j?"":"on"}" alt="">`).join(""):"";
+  DA.querySelectorAll("img").forEach(t=>t.onclick=()=>{DI.src=`img/${t.dataset.k}.webp`;DA.querySelectorAll("img").forEach(x=>x.classList.toggle("on",x===t));});
+  DX.innerHTML=`<div class="cat">№ ${m.no} · ${CATS[m.c]}</div><h3>${m.n}</h3><div class="tag">${m.t}</div><p class="d">${m.d}</p>
+    <dl class="spec"><dt>Umístění</dt><dd>${m.s[0]}</dd><dt>Rozměr</dt><dd>${m.s[1]} <span style="color:var(--mute)">(orientačně)</span></dd><dt>Materiál</dt><dd>${m.s[2]}</dd><dt>Světlo</dt><dd>${m.s[3]}</dd></dl>
+    <a class="btn" href="mailto:jaroslav.klimes@ilustro.cz?subject=${encodeURIComponent("Poptávka – monument "+m.n)}">Poptat tento monument</a>`;
+  const pos=visible.indexOf(i);DC.innerHTML=`<b>${pad(pos+1)}</b> / ${pad(visible.length)}`;
+  // přednačti sousedy
+  [step(1),step(-1)].forEach(j=>{const im=new Image();im.src=`img/${pad(M[j].img[0])}.webp`;});
+}
+function step(d){let p=visible.indexOf(cur);if(p<0)p=0;return visible[(p+d+visible.length)%visible.length];}
+function openDT(i,push=true){fill(i);DT.classList.add("on");DT.setAttribute("aria-hidden","false");document.body.classList.add("dt-on");
+  if(push)history.replaceState(null,"","#"+M[i].id);}
+function closeDT(){DT.classList.remove("on");DT.setAttribute("aria-hidden","true");document.body.classList.remove("dt-on");
+  history.replaceState(null,"",location.pathname);const c=G.children[cur];if(c)c.focus({preventScroll:true});}
+function go(d){const j=step(d);DT.classList.add("swap");setTimeout(()=>{fill(j);history.replaceState(null,"","#"+M[j].id);DT.classList.remove("swap");},260);}
+document.getElementById("dtX").onclick=closeDT;
+document.getElementById("dtP").onclick=()=>go(-1);
+document.getElementById("dtN").onclick=()=>go(1);
+addEventListener("keydown",e=>{if(!DT.classList.contains("on"))return;if(e.key==="Escape")closeDT();if(e.key==="ArrowLeft")go(-1);if(e.key==="ArrowRight")go(1);});
+let tx=null,ty=null;DT.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+DT.addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);tx=null;});
+const fromHash=()=>{const h=location.hash.slice(1);const i=M.findIndex(m=>m.id===h);if(i>=0){openDT(i,false);return true;}return false;};
+const deepLink=fromHash();
+
 /* ===== INTRO: zlatá tečka → světelný prstenec s odrazem → cinknutí → odhalení ===== */
 (function(){
   const I=document.getElementById("intro"),C=document.getElementById("ic"),X=C.getContext("2d");
   const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
   let seen=false;try{seen=sessionStorage.getItem("introSeen")==="1";}catch(e){}
   const fin=()=>{document.body.classList.remove("intro-on");I.classList.add("out");setTimeout(()=>I.remove(),1000);try{sessionStorage.setItem("introSeen","1");}catch(e){}};
-  if(seen||reduce){I.remove();document.body.classList.remove("intro-on");return;}
+  if(seen||reduce||deepLink){I.remove();document.body.classList.remove("intro-on");return;}
 
   const sW=new Audio("zvuky/intro-whoosh.mp3"),sC=new Audio("zvuky/intro-chime.mp3");sW.volume=.8;sC.volume=1;
   let chimed=false,whooshed=false,blocked=false;
@@ -403,7 +471,6 @@ LB.onclick=e=>{if(e.target===LB)LB.classList.remove("on");};
   requestAnimationFrame(frame);
 })();
 
-addEventListener("keydown",e=>{if(!LB.classList.contains("on"))return;if(e.key==="Escape")LB.classList.remove("on");if(e.key==="ArrowLeft")show(cur-1);if(e.key==="ArrowRight")show(cur+1);});
 </script>
 </body>
 </html>
