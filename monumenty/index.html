@@ -331,6 +331,7 @@ const M=[
  {img:[34],n:"Ouroboros",c:"nam",t:"Monumentální prstenec ve vodě.",d:"Masivní kruh, který stojí ve vodní ploše a v odrazu se uzavírá. Ikonický objekt pro nové čtvrti a firemní náměstí.",s:["Vodní plocha, náměstí","ø 5 m","Chromovaný plech, 3D tištěné jádro","Vnitřní obvodová LED IP68"]},
  {img:[35],n:"Pavilon",c:"bra",t:"Světelný dům uprostřed náměstí.",d:"Lamelová kostka, do které se dá vstoupit. Jako vánoční pavilon, informační bod nebo zastřešení pro akce.",s:["Historické náměstí, akce","3 × 3 × 4 m","Bílé lamely, ocelová konstrukce","Teplá LED, scény pro akce"]}
 ];
+const setHash=h=>{try{history.replaceState(null,"",h);}catch(e){}};
 const pad=n=>String(n).padStart(2,"0");
 const slug=t=>t.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 M.forEach((m,i)=>{m.no=pad(i+1);m.id=slug(m.n);});
@@ -387,10 +388,10 @@ function fill(i){
 }
 function step(d){let p=visible.indexOf(cur);if(p<0)p=0;return visible[(p+d+visible.length)%visible.length];}
 function openDT(i,push=true){fill(i);DT.classList.add("on");DT.setAttribute("aria-hidden","false");document.body.classList.add("dt-on");
-  if(push)history.replaceState(null,"","#"+M[i].id);}
+  if(push)setHash("#"+M[i].id);}
 function closeDT(){DT.classList.remove("on");DT.setAttribute("aria-hidden","true");document.body.classList.remove("dt-on");
-  history.replaceState(null,"",location.pathname);const c=G.children[cur];if(c)c.focus({preventScroll:true});}
-function go(d){const j=step(d);DT.classList.add("swap");setTimeout(()=>{fill(j);history.replaceState(null,"","#"+M[j].id);DT.classList.remove("swap");},260);}
+  setHash(location.pathname);const c=G.children[cur];if(c)c.focus({preventScroll:true});}
+function go(d){const j=step(d);DT.classList.add("swap");setTimeout(()=>{fill(j);setHash("#"+M[j].id);DT.classList.remove("swap");},260);}
 document.getElementById("dtX").onclick=closeDT;
 document.getElementById("dtP").onclick=()=>go(-1);
 document.getElementById("dtN").onclick=()=>go(1);
