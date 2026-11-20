@@ -189,6 +189,27 @@ body.dt-on{overflow:hidden}
   .dt-alt img{width:90px}
 }
 
+
+/* karty s popisem */
+.grid{grid-template-columns:repeat(3,1fr)!important;grid-auto-rows:auto!important;gap:56px 28px!important;grid-auto-flow:row!important}
+.card{overflow:visible!important;background:none!important;cursor:pointer}
+.card.big,.card.wide{grid-column:auto!important;grid-row:auto!important}
+.card .ph{position:relative!important;inset:auto!important;aspect-ratio:16/10!important;overflow:hidden}
+.card .ph::after{display:none}
+.card .num{top:14px;left:14px;background:rgba(7,8,10,.55);padding:6px 10px;border-radius:99px;backdrop-filter:blur(6px)}
+.card .cap{position:static!important;padding:20px 0 0!important}
+.card .cap b{font-size:clamp(28px,2.3vw,38px)!important;margin-bottom:8px}
+.card .tg{max-height:none!important;opacity:1!important;margin:0 0 12px!important;font-size:17px!important}
+.card .ds{display:block;font-size:14px;line-height:1.65;color:var(--mute);margin-bottom:16px}
+.card .mt{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#bdb7ab;border-top:1px solid var(--line);padding-top:12px}
+.card .mt span::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle}
+.card .more{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.card:hover .cap b{color:var(--gold)}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)!important}}
+@media (max-width:640px){.grid{grid-template-columns:1fr!important;gap:44px!important}.card .tg{display:block!important}.card .cap b{font-size:30px!important}}
+
+.bar.solid{mix-blend-mode:normal;background:rgba(7,8,10,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:16px;padding-bottom:16px}
+.bar{transition:background .4s,padding .4s}
 /* intro */
 #intro{position:fixed;inset:0;z-index:200;background:#000;transition:opacity .9s ease}
 #intro canvas{position:absolute;inset:0;width:100%;height:100%}
@@ -328,9 +349,9 @@ const F=document.getElementById("filters");let visible=M.map((_,i)=>i);
 const G=document.getElementById("grid");
 M.forEach((m,i)=>{
   const c=document.createElement("a");c.className="card rv "+SIZE[i%SIZE.length];c.href="#"+m.id;
-  c.innerHTML=`<div class="ph"><img loading="lazy" src="img/${SIZE[i%SIZE.length]==="big"?"":"t/"}${pad(m.img[0])}.webp" alt="${m.n}"></div>
+  c.innerHTML=`<div class="ph"><img loading="lazy" src="img/t/${pad(m.img[0])}.webp" alt="${m.n}"></div>
     <span class="num">№ ${m.no}</span><span class="open">↗</span>
-    <div class="cap"><span class="cat2">${CATS[m.c]}</span><b>${m.n}</b><span class="tg">${m.t}</span></div>`;
+    <div class="cap"><span class="cat2">${CATS[m.c]}</span><b>${m.n}</b><span class="tg">${m.t}</span><span class="ds">${m.d}</span><div class="mt"><span>${m.s[1]}</span><span>${m.s[0]}</span></div><span class="more">Detail a parametry →</span></div>`;
   c.onclick=e=>{e.preventDefault();openDT(i);};
   G.appendChild(c);
 });
@@ -345,7 +366,7 @@ function frame(){
   const h=innerHeight;
   document.querySelectorAll("[data-par]").forEach(el=>{const r=el.parentElement.getBoundingClientRect();if(r.bottom<0||r.top>h)return;
     el.style.setProperty("--py",((r.top+r.height/2-h/2)*-(+el.dataset.par)-r.height*.08)+"px");});
-  P.style.width=(scrollY/(document.body.scrollHeight-h)*100)+"%";tick=false;
+  P.style.width=(scrollY/(document.body.scrollHeight-h)*100)+"%";document.querySelector(".bar").classList.toggle("solid",scrollY>h*.8);tick=false;
 }
 addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(frame);}},{passive:true});frame();
 
