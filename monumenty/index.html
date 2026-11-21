@@ -489,10 +489,29 @@ const deepLink=fromHash();
   const start=-Math.PI/2,sp=[];let t0=null,done=false;
 
   function line(y,a0,a1,alpha,boost,sy){
-    X.save();X.translate(cx,y);X.scale(1,sy||1);X.lineCap="round";
-    X.globalAlpha=alpha*.35;X.strokeStyle="#ffbf6a";X.lineWidth=(7+boost*6)*D;X.shadowColor="#ffb35c";X.shadowBlur=(26+boost*40)*D;
+    if(a1<=a0)return;
+    X.save();X.translate(cx,y);X.scale(1,sy||1);
+    // 1) koróna – měkká zář, která se od kruhu rozplývá do tmy (jen na už nakreslené části)
+    X.save();if(a1-a0<Math.PI*2-.001){X.beginPath();X.moveTo(0,0);X.arc(0,0,R*2,a0,a1);X.closePath();X.clip();}
+    const r0=R*.5,r1=R*2.1,f=v=>(v-r0)/(r1-r0),k=alpha*(.55+boost*.6);
+    const g=X.createRadialGradient(0,0,r0,0,0,r1);
+    g.addColorStop(0,"rgba(255,170,80,0)");
+    g.addColorStop(f(R*.8),`rgba(255,175,90,${.05*k})`);
+    g.addColorStop(f(R*.93),`rgba(255,180,95,${.16*k})`);
+    g.addColorStop(f(R*.985),`rgba(255,200,130,${.45*k})`);
+    g.addColorStop(f(R),`rgba(255,225,175,${.75*k})`);
+    g.addColorStop(f(R*1.03),`rgba(255,190,115,${.40*k})`);
+    g.addColorStop(f(R*1.12),`rgba(255,165,75,${.22*k})`);
+    g.addColorStop(f(R*1.35),`rgba(255,145,55,${.09*k})`);
+    g.addColorStop(f(R*1.7),`rgba(255,130,45,${.03*k})`);
+    g.addColorStop(1,"rgba(255,140,50,0)");
+    X.fillStyle=g;X.fillRect(-r1,-r1,r1*2,r1*2);X.restore();
+    X.lineCap="round";
+    // 2) teplá zlatá záře
+    X.globalAlpha=alpha*.55;X.strokeStyle="#ffb45a";X.lineWidth=(9+boost*8)*D;X.shadowColor="#ff9f3a";X.shadowBlur=(30+boost*30)*D;
     X.beginPath();X.arc(0,0,R,a0,a1);X.stroke();
-    X.globalAlpha=alpha;X.strokeStyle="#fff2d8";X.lineWidth=(2.2+boost*1.2)*D;X.shadowColor="#ffd59a";X.shadowBlur=(12+boost*14)*D;
+    // 3) tenké skoro bílé jádro
+    X.globalAlpha=alpha;X.strokeStyle="#fffaf0";X.lineWidth=(1.6+boost*.8)*D;X.shadowColor="#fff1d6";X.shadowBlur=(6+boost*8)*D;
     X.stroke();X.restore();
   }
   function head(x,y,a){const g=X.createRadialGradient(x,y,0,x,y,12*D);
